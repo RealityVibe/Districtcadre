@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="unChecked">#ffffff</color>
+    <color name="checked">#ffffff</color>
+    <color name="radio_notCheck_bdg_color">#BABABA</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorChecked">#000</color>
+    <color name="colorNotChecked">#fff</color>
+    <color name="textcolor_white">#fff</color>
+    // 大表选择RadioButton 未选择时的背景色
+</resources>

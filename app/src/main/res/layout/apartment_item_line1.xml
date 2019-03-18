@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="5px">
+
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:singleLine="true"
+        android:background="@drawable/shape_apart_name"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:paddingLeft="5px"
+        android:paddingRight="5px"
+        android:id="@+id/depart_nm"
+        android:layout_width="120px"
+        android:layout_height="60px" />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre1"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre2"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre3"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre4"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre5"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre6"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre7"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre8"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre9"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre10"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre11"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre12"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre13"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre14"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre15"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+    <TextView
+        android:textSize="24px"
+        android:gravity="center"
+        android:background="@drawable/shape_cadre_item"
+        android:textColor = "#fff"
+        android:layout_marginLeft="3px"
+        android:id="@+id/cadre16"
+        android:layout_width="103px"
+        android:layout_height="60px"
+        />
+</LinearLayout>
+

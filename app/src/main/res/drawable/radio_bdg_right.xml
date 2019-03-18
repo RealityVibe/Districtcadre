@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/type_radiobtn_right"
+        android:color="@color/checked"
+        android:state_checked="true" />
+    <item android:drawable="@drawable/type_radiobtn_right_ed"
+        android:color="@color/unChecked"
+        android:state_checked="false"/>
+</selector>

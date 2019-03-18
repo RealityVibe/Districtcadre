@@ -1,0 +1,50 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">萧山干部</string>
+    <string name="county">镇街领导</string>
+    <string name="direct">区级机关</string>
+    <string name="back">后备干部</string>
+    <string name="researcher">调研员</string>
+    <string name="mainTitleName">区管干部基本情况</string>
+    <!--文件路径-->
+    <string name="filePath">Android/docs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    <array name="typeList">
+        <item>镇街干部视图</item>
+        <item>区级干部视图</item>
+    </array>-->
+
+
+    <array name="countyTitleList" tools:ignore="MissingDefaultResource">
+        <item>镇长</item>
+        <item>人大主席</item>
+        <item>副书记</item>
+        <item>纪委书记</item>
+        <item>组织</item>
+        <item>宣传统战</item>
+        <item>文教</item>
+        <item>经济</item>
+        <item>城建</item>
+        <item>农业</item>
+        <item>人武</item>
+        <item>纪委书记</item>
+        <item>派出所长</item>
+        <item>副主席</item>
+        <item>副主席</item>
+        <item>不定</item>
+    </array>
+
+    <array name="titleArray">
+        <item>镇街干部</item>
+        <item>区级机关</item>
+        <item>后备干部</item>
+        <item>调研员</item>
+    </array>
+
+    <array name="fragmentList" tools:ignore="MissingDefaultResource">
+        <item>CountyFragment</item>
+        <item>DirectFragment</item>
+        <item>BackupFragment</item>
+        <item>ResearcherFragment</item>
+    </array>
+</resources>

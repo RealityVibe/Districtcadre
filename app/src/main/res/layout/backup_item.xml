@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/result_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <TextView
+        android:padding="3px"
+        android:singleLine="true"
+        android:id="@+id/backup_bh"
+        android:layout_width="0dp"
+        android:layout_weight="45"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="1212"/>
+    <!--姓名-->
+    <TextView
+        android:padding="3px"
+        android:singleLine="true"
+        android:id="@+id/backup_xm"
+        android:layout_width="0dp"
+        android:layout_weight="66"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="姓名"/>
+    //性别
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_xb"
+        android:layout_width="0dp"
+        android:layout_weight="30"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="男"/>
+    <!--出生年月-->
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_csny"
+        android:singleLine="true"
+        android:layout_width="0dp"
+        android:layout_weight="80"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="1972.08"/>
+    //参加工作时间
+    <TextView
+        android:singleLine="true"
+        android:padding="3px"
+        android:id="@+id/backup_cjgzsj"
+        android:layout_width="0dp"
+        android:layout_weight="80"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:gravity="center"
+        android:text="1998.08"
+        android:textSize="28px" />
+
+    //学历
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_xl"
+        android:layout_width="0dp"
+        android:layout_weight="60"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="大学"/>
+
+    <!--党派-->
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_dp"
+        android:layout_width="0dp"
+        android:layout_weight="60"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="中共"/>
+
+    <!--身份-->
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_sf"
+        android:layout_width="0dp"
+        android:layout_weight="60"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="公务员"/>
+
+    <!--现任工作单位和职务-->
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_xrzw"
+        android:layout_width="0dp"
+        android:layout_weight="166"
+        android:layout_height="wrap_content"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:text="现工作单位和职务"/>
+
+
+    <!--上次是否为干部-->
+    <TextView
+        android:padding="3px"
+        android:id="@+id/backup_scsfhb"
+        android:layout_width="0dp"
+        android:layout_weight="70"
+        android:layout_height="match_parent"
+        android:background="@drawable/searchresult_item"
+        android:textSize="28px"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text=""/>
+
+
+</LinearLayout>

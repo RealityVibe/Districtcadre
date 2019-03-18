@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/global_content">
+    <LinearLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bkg">
+
+        <LinearLayout
+            android:id="@+id/menu_bar"
+            android:background="@drawable/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="105px"
+            android:orientation="horizontal"
+            android:paddingBottom="3px">
+
+            <ImageView
+                android:id="@+id/logo_list"
+                android:layout_marginLeft="70px"
+                android:layout_marginRight="10px"
+                android:padding="8px"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_white"/>
+            <TextView
+                android:id="@+id/menu_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingTop="5px"
+                android:text="@string/mainTitleName"
+                android:textColor="#fff"
+                android:textSize="50px" />
+
+            <RadioGroup
+                android:layout_marginTop="3px"
+                android:layout_marginLeft="50px"
+                android:id="@+id/type_group"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="60px"
+                android:orientation="horizontal"
+                android:background="@drawable/main_shape_radius"
+                android:gravity="center">
+
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:padding="5px"
+                    android:checked="true"
+                    android:textColor="@drawable/main_color_radiobtn"
+                    android:background="@drawable/radio_bdg_left"
+                    android:id="@+id/county_button"
+                    android:textSize="32px"
+                    android:layout_width="160px"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="@string/county"/>
+
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:padding="5px"
+                    android:textColor="@drawable/main_color_radiobtn"
+                    android:background="@drawable/radio_bdg"
+                    android:id="@+id/area_button"
+                    android:textSize="32px"
+                    android:layout_width="160px"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/direct" />
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:padding="5px"
+                    android:textColor="@drawable/main_color_radiobtn"
+                    android:background="@drawable/radio_bdg"
+                    android:id="@+id/backup_button"
+                    android:textSize="32px"
+                    android:layout_width="160px"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/back" />
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:padding="5px"
+                    android:textColor="@drawable/main_color_radiobtn"
+                    android:background="@drawable/radio_bdg_right"
+                    android:id="@+id/researcher_button"
+                    android:textSize="32px"
+                    android:layout_width="160px"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/researcher" />
+
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:paddingRight="55px">
+
+                <LinearLayout
+                    android:layout_marginTop="3px"
+                    android:id="@+id/search_box"
+                    android:layout_width="250px"
+                    android:layout_height="60px"
+                    android:layout_gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:background="@drawable/main_shape_radius"
+                    android:paddingLeft="0px"
+                    android:paddingRight="10px"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:padding="8px"
+                        android:id="@+id/search_button"
+                        android:layout_width="45px"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/index_search" />
+
+                    <com.yze.manageonpad.districtcadre.utils.DeleteEditText
+                        android:cursorVisible="false"
+                        android:id="@+id/search_text"
+                        android:maxLength="8"
+                        android:layout_width="190px"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/emty_shape"
+                        android:drawableRight="@drawable/delete_48"
+                        android:textSize="26px"
+                        android:paddingLeft="5px"
+                        android:imeOptions="actionSearch"
+                        android:hint="\u3000搜\u3000索"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/cadres_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+    </LinearLayout>
+</FrameLayout>
