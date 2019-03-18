@@ -1,6 +1,7 @@
 package com.yze.manageonpad.districtcadre.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,24 +11,46 @@ import java.util.Map;
  * 装载所有的json来的参数
  */
 public class CadresParams implements Serializable {
-    private List<Apartment> nameList;
+    private List<Apartment> allNameList;
+    private List<Apartment> daNameList;
+    private List<Apartment> caNameList;
     private String[][] cadreMatrix;
     private int[] prescentNum;
     private Map<String, Cadre> cadreMap;
 
-    public CadresParams(List<Apartment> nameList, String[][] cadreMatrix, int[] prescentNum, Map<String, Cadre> cadreMap) {
-        this.nameList = nameList;
+    public CadresParams(List<Apartment> daNameList, List<Apartment> caNameList, String[][] cadreMatrix, int[] prescentNum, Map<String, Cadre> cadreMap) {
+        this.daNameList = daNameList;
+        this.caNameList = caNameList;
         this.cadreMatrix = cadreMatrix;
         this.prescentNum = prescentNum;
         this.cadreMap = cadreMap;
+        this.allNameList = new ArrayList<>();
+        allNameList.addAll(caNameList);
+        allNameList.addAll(daNameList);
     }
 
-    public List<Apartment> getNameList() {
-        return nameList;
+    public List<Apartment> getAllNameList() {
+        return allNameList;
     }
 
-    public void setNameList(List<Apartment> nameList) {
-        this.nameList = nameList;
+    public void setAllNameList(List<Apartment> allNameList) {
+        this.allNameList = allNameList;
+    }
+
+    public List<Apartment> getDaNameList() {
+        return daNameList;
+    }
+
+    public void setDaNameList(List<Apartment> daNameList) {
+        this.daNameList = daNameList;
+    }
+
+    public List<Apartment> getCaNameList() {
+        return caNameList;
+    }
+
+    public void setCaNameList(List<Apartment> caNameList) {
+        this.caNameList = caNameList;
     }
 
     public String[][] getCadreMatrix() {

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  *
  * 2019/2/27.
  */
-
+@Deprecated
 public class BackupAdapter extends RecyclerView.Adapter<BackupAdapter.ViewHolder> {
     private List<Cadre> cadreList;
     private Context mContext;

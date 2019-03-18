@@ -19,6 +19,7 @@ import java.util.List;
  *
  * 2019/2/27.
  */
+@Deprecated
 public class TitleAdapter extends BaseAdapter {
     private Context mContext;
     //    public static List<String> mThumbIds = new ArrayList<String>();

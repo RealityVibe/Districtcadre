@@ -91,7 +91,7 @@ public class BackFragment extends Fragment {
     //初始化布局View
     public void initView() {
         //对干部List赋值
-        cadresParams.getNameList().remove(0);
+        cadresParams.getAllNameList().remove(0);
         try {
             investList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "bk_person");
             fullList.addAll(investList);

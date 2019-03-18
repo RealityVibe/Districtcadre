@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.enums.ExceptionsEnum;
+import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
+import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.FileOperationUtils;
 
 import java.io.File;
@@ -34,10 +36,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     private List<Cadre> mCadreList;
     private Context mContext;
     private List<TextView> tvList = new ArrayList<TextView>();
+    private CadresParams cadresParams;
 
-    public ResultAdapter(List<Cadre> cadreList, Context context) {
+    public ResultAdapter(List<Cadre> cadreList, CadresParams cadresParams, Context context) {
         mCadreList = cadreList;
         mContext = context;
+        this.cadresParams = cadresParams;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -105,14 +109,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             holder.xmText.setText(cadre.getXm());
         AutofitHelper.create(holder.xmText);
 //        打开该干部的个人审批材料
+        final List<Apartment> apartmentList = cadresParams.getAllNameList();
         holder.xmText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 File docPath = new File(Environment.getExternalStorageDirectory(), "Android/docs");
                 File wordFile = new File(docPath, cadre.getXm() + ".doc");
-                File wordFile2 = new File(docPath, cadre.getXm() + "-" + apartmentsList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".doc");
+                File wordFile2 = new File(docPath, cadre.getXm() + "-" + apartmentList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".doc");
                 File wordFile3 = new File(docPath, cadre.getXm() + ".docx");
-                File wordFile4 = new File(docPath, cadre.getXm() + "-" + apartmentsList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".docx");
+                File wordFile4 = new File(docPath, cadre.getXm() + "-" + apartmentList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".docx");
 //                Toast.makeText(getContext(),cadre.getXm()+"-"+apartmentsList.get(Integer.valueOf(cadre.getBmbh())).getBmmz().toString() , Toast.LENGTH_LONG ).show();
 
                 try {

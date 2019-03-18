@@ -27,12 +27,12 @@ import butterknife.ButterKnife;
 import static com.yze.manageonpad.districtcadre.MainActivity.NavigationBarStatusBar;
 
 public class WelocmeActivity extends AppCompatActivity implements View.OnClickListener {
-    @BindView(R.id.welcome_county) private Button countyBtn;
+//    @BindView(R.id.welcome_county) private Button countyBtn;
     @BindView(R.id.welcome_direct) private Button directBtn;
     @BindView(R.id.welcome_backup) private Button backupBtn;
     @BindView(R.id.welcome_researcher) private Button investBtn;
-    @BindView(R.id.welcome_bdg) private ImageView imgView;
-    @BindView(R.id.welcome_ll) private LinearLayout welcome_ll;
+/*    @BindView(R.id.welcome_bdg) private ImageView imgView;
+    @BindView(R.id.welcome_ll) private LinearLayout welcome_ll;*/
     @BindView(R.id.gesture_ll) private LinearLayout gesture_ll;
     @BindView(R.id.tv_state) private TextView tv_state;
     @BindView(R.id.reset_rb) private CheckBox reset_rb;
@@ -66,7 +66,7 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         NavigationBarStatusBar(this, true);
 
         //添加点击事件
-        countyBtn.setOnClickListener(this);
+//        countyBtn.setOnClickListener(this);
         directBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
         investBtn.setOnClickListener(this);

@@ -1,4 +1,4 @@
-package com.yze.manageonpad.districtcadre.utils;
+package com.yze.manageonpad.districtcadre.core.subview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

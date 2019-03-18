@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
+import com.yze.manageonpad.districtcadre.core.enums.CadreType;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 
 /**
@@ -38,7 +39,7 @@ public class CountyFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.county_fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        NewRvAdapter mAdapter = new NewRvAdapter(this.getContext(), cadresParams);
+        NewRvAdapter mAdapter = new NewRvAdapter(this.getContext(), cadresParams, CadreType.COUNTY);
         mRecyclerView.setAdapter(mAdapter);
     }
 

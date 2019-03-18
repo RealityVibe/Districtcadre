@@ -3,12 +3,7 @@ package com.yze.manageonpad.districtcadre;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.support.v7.widget.RecyclerView;
-
-import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
 import com.yze.manageonpad.districtcadre.core.fragments.BackFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.CountyFragment;
@@ -20,14 +15,11 @@ import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -47,7 +39,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -81,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public List<Apartment> apartmentsList = new ArrayList<Apartment>();
     public int loadApartNum = 0;
     public Map<String, Cadre> cadresMap = new HashMap<String, Cadre>();
+    /**
+     * index：部门编号
+     * value：部门人数
+     */
     public int presentNum[];
     public int apartmentsNum = 0;
     public String cadresMatrix[][];
@@ -117,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int cadreType = 1;
 
+    public static final int MAX_CADRE_NUM = 102;
     /*
      * 镇街干部视图
      * */
@@ -190,10 +186,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationBarStatusBar(this, true);
 
         // 欢迎界面
-        mainContent.setOnClickListener((View.OnClickListener) this);
+//        mainContent.setOnClickListener((View.OnClickListener) this);
 
-        // 开启线程初始化
+        // 开始装载数据
         new Thread(new InitThread()).start();
+
         editText.setCursorVisible(false);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -252,16 +249,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.dismiss();
     }
 
-    private void initNamelist() throws Exception {
+    private void buildDataCollections() throws Exception {
         //从json获取数据
-        countyApartmentsList = JSONUtils.parseApartmentsFromJSON("sourcedata.json", this, "1", loadApartNum);
-        directApartmentsList = JSONUtils.parseApartmentsFromJSON("sourcedata.json", this, "2", loadApartNum);
+        countyApartmentsList = JSONUtils.parseApartmentsFromJSON("sourcedata.json", this, "1");
+        directApartmentsList = JSONUtils.parseApartmentsFromJSON("sourcedata.json", this, "2");
         if (countyApartmentsList != null && directApartmentsList != null) {
             apartmentsList.addAll(countyApartmentsList);
             apartmentsList.addAll(directApartmentsList);
-            backCadresList = JSONUtils.parseBackupFromJson("sourcedata.json", this, "3", loadApartNum);
+            backCadresList = JSONUtils.parseBackupFromJson("sourcedata.json", this, "3");
             apartmentsNum = countyApartmentsList.size() + directApartmentsList.size();
-            cadresMatrix = new String[apartmentsNum + 3][102]; // 设置各单位最大人数为100
+
+            // 设置各单位最大人数为102
+            cadresMatrix = new String[apartmentsNum + 3][MAX_CADRE_NUM];
             presentNum = new int[apartmentsNum + 1];
             for (int i = 0; i < apartmentsNum + 1; ++i) {
                 presentNum[i] = 0;
@@ -269,9 +268,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Toast.makeText(this, "请检查数据文件是否正确", Toast.LENGTH_LONG).show();
         }
-        param = new CadresParams(apartmentsList, cadresMatrix, presentNum, cadresMap);
+        param = new CadresParams(directApartmentsList, countyApartmentsList, cadresMatrix, presentNum, cadresMap);
         ((DirectFragment) directFragment).setCadresParams(param);
-        ((DirectFragment) directFragment).setCadresParams(param);
+        ((CountyFragment) directFragment).setCadresParams(param);
+        ((BackFragment) directFragment).setCadresParams(param);
+        ((ResearcherFragment) directFragment).setCadresParams(param);
     }
 
     private void initFragmentsData() {
@@ -350,6 +351,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intent = new Intent(MainActivity.this, DetailView.class);
                     //将获取到的干部对象传递给detailView
                     intent.putExtra("intent_type", "search_by_apartment");
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("cadresParams", new CadresParams(directApartmentsList, countyApartmentsList, cadresMatrix, presentNum, cadresMap));
+                    intent.putExtras(bundle);
                     intent.putExtra("bmbh", String.valueOf(a.getBmbh()));
                     intent.putExtra("bmmz", a.getBmmz());
                     intent.putExtra("params", param);
@@ -570,9 +574,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class InitThread extends Thread {
         @Override
         public void run() {
-//            try{
             try {
-                initNamelist();
+                buildDataCollections();
                 initFragmentsData();
                 //初始化部门类型
                 initTypeSelector(mSavedInstanceState);

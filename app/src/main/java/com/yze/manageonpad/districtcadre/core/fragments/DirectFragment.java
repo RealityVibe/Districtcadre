@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
+import com.yze.manageonpad.districtcadre.core.enums.CadreType;
 import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.yze.manageonpad.districtcadre.MainActivity.directApartmentsList;
-
 /**
  * @author yze
  * <p>
@@ -29,7 +27,6 @@ public class DirectFragment extends Fragment {
 
     private View view;
     private RecyclerView mRecyclerView;
-    private List<Apartment> apartments = new ArrayList<Apartment>();
     private CadresParams cadresParams;
     @Override
     public View onCreateView(LayoutInflater inflate, ViewGroup container,
@@ -43,11 +40,10 @@ public class DirectFragment extends Fragment {
 
     //初始化布局View
     public void initView() {
-        apartments = directApartmentsList;
         mRecyclerView = (RecyclerView) view.findViewById(R.id.direct_fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        NewRvAdapter mAdapter = new NewRvAdapter(this.getContext(), cadresParams);
+        NewRvAdapter mAdapter = new NewRvAdapter(this.getContext(), cadresParams, CadreType.DIRECT);
         mRecyclerView.setAdapter(mAdapter);
 
     }

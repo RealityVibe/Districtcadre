@@ -129,7 +129,7 @@
                         android:layout_gravity="center"
                         android:src="@mipmap/index_search" />
 
-                    <com.yze.manageonpad.districtcadre.utils.DeleteEditText
+                    <com.yze.manageonpad.districtcadre.core.subview.DeleteEditText
                         android:cursorVisible="false"
                         android:id="@+id/search_text"
                         android:maxLength="8"

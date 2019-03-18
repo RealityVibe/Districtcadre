@@ -17,7 +17,6 @@ import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.CadreUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ import butterknife.ButterKnife;
 
 /**
  * @author yze
- *
+ * <p>
  * 2019/2/27.
  */
 
@@ -41,8 +40,8 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Map<String, Cadre> cadreMap;
     private String num;
 
-    public NewRvAdapter(Context context, CadresParams params) {
-        mNameList = params.getNameList();
+    public NewRvAdapter(Context context, CadresParams params, CadreType type) {
+        mNameList = CadreType.COUNTY.equals(type) ? params.getCaNameList() : params.getDaNameList();
         mContext = context;
         this.cadreMatrix = params.getCadreMatrix();
         this.cadreMap = params.getCadreMap();
@@ -244,7 +243,8 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
-        @BindView(R.id.depart_nm) TextView departName;
+        @BindView(R.id.depart_nm)
+        TextView departName;
         List<TextView> tvList = new ArrayList<TextView>();
 
         public ViewHolder2(View view) {

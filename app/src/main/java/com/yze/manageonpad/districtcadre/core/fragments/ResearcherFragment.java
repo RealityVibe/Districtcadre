@@ -18,6 +18,7 @@ import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.ResearchAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.ExceptionsEnum;
 import com.yze.manageonpad.districtcadre.model.Apartment;
+import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.FileOperationUtils;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
 
@@ -26,9 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.yze.manageonpad.districtcadre.MainActivity.countyApartmentsList;
-import static com.yze.manageonpad.districtcadre.MainActivity.directApartmentsList;
 
 /**
  * @author yze
@@ -42,12 +40,12 @@ public class ResearcherFragment extends Fragment {
      * */
     private String sc;
     private String type;
-    private List<String> investList = new ArrayList<String>();
+    private List<String> cadreList = new ArrayList<String>();
     private List<String> fullList = new ArrayList<String>();
     private ResearchAdapter mAdapter; //这当然是适配器啦
+    private CadresParams cadresParams;
     // 调研员大表rv
-    @BindView(R.id.county_fragment_recyclerview)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.county_fragment_recyclerview) RecyclerView mRecyclerView;
     // 单位表
     private List<Apartment> apartments = new ArrayList<Apartment>();
 
@@ -94,12 +92,12 @@ public class ResearcherFragment extends Fragment {
     //初始化布局View
     public void initView() {
         //对干部List赋值
-        apartments.addAll(countyApartmentsList);
-        apartments.addAll(directApartmentsList);
+        apartments.addAll(cadresParams.getCaNameList());
+        apartments.addAll(cadresParams.getDaNameList());
         apartments.remove(0);
         try {
-            investList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "invest");
-            fullList.addAll(investList);
+            cadreList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "invest");
+            fullList.addAll(cadreList);
         } catch (Exception e) {
             Toast.makeText(getContext(), "调研员数据缺失", Toast.LENGTH_SHORT).show();
         }
@@ -107,27 +105,34 @@ public class ResearcherFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.researcher_fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ResearchAdapter(investList, getContext());
+        mAdapter = new ResearchAdapter(cadreList, getContext());
         mRecyclerView.setAdapter(mAdapter);
     }
 
     public boolean search_condition(String name) {
         if (name.trim().equals("") || name == null) {
-            investList.addAll(fullList);
+            cadreList.addAll(fullList);
             return false;
         }
         boolean isNull = true;
-        investList.clear();
+        cadreList.clear();
         for (String a : fullList) {
             if (((a.split(",")[0]).split("\\(")[0]).equals(name)) {
                 isNull = false;
-                investList.add(a);
+                cadreList.add(a);
             }
         }
         mAdapter.notifyDataSetChanged();
         if (isNull)
-            investList.addAll(fullList);
+            cadreList.addAll(fullList);
         return isNull;
     }
 
+    public CadresParams getCadresParams() {
+        return cadresParams;
+    }
+
+    public void setCadresParams(CadresParams cadresParams) {
+        this.cadresParams = cadresParams;
+    }
 }

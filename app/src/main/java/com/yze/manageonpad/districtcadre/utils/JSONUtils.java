@@ -150,7 +150,7 @@ public class JSONUtils {
     /*
      * 获取后备干部名单
      * */
-    public static List<Cadre> parseBackupFromJson(String jsonData, Context c, String bmlx, int loadApartNum) throws Exception {
+    public static List<Cadre> parseBackupFromJson(String jsonData, Context c, String bmlx) throws Exception {
         String text = getContentString(jsonData, c);
         List<Cadre> cadreList = new ArrayList<>();
         if (text != null) {
@@ -218,12 +218,12 @@ public class JSONUtils {
     /*
      * 获取单位
      * */
-    public static List<Apartment> parseApartmentsFromJSON(String jsonData, Context c, String bmlx, int loadApartNum) throws IOException, JSONException {
+    public static List<Apartment> parseApartmentsFromJSON(String jsonData, Context c, String bmlx) throws IOException, JSONException {
         List<Apartment> apartmentList = new ArrayList<Apartment>();
         String text = getContentString(jsonData, c);
         if (bmlx.equals("1")) {
             apartmentList.add(new Apartment(0, "---", "1"));
-            loadApartNum++;
+//            loadApartNum++;
         }
         if (text != null) {
                /* Gson gson = new Gson();
@@ -233,7 +233,7 @@ public class JSONUtils {
             for (int i = 0; i < array.length(); ++i) {
                 JSONObject tmpobject = array.getJSONObject(i);
                 if (tmpobject.get("bmlx").equals(bmlx)) {
-                    loadApartNum++;
+//                    loadApartNum++;
                     Apartment tmp_apartment = new Apartment(Integer.valueOf(tmpobject.getString("bmbh"))
                             , tmpobject.getString("bmmz"), tmpobject.getString("bmlx"));
                     apartmentList.add(tmp_apartment);

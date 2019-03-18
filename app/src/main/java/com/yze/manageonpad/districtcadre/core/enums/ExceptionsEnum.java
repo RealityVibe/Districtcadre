@@ -18,7 +18,7 @@ public class ExceptionsEnum{
     public final static ExceptionsEnum COUNTY_MISS_ERROR = new ExceptionsEnum("1001", "乡镇干部数据缺失");
     public final static ExceptionsEnum DIRECT_MISS_ERROR = new ExceptionsEnum("1002", "区级干部数据缺失");
     public final static ExceptionsEnum BACKUP_MISS_ERROR = new ExceptionsEnum("1003", "后备干部数据缺失");
-    public final static ExceptionsEnum RESEARCHER_MISS_ERROR = new ExceptionsEnum("1004", "调研员数据缺失");
+    public final static ExceptionsEnum RESEARCHER_MISS_ERROR = new ExceptionsEnum("1004", "调研员数据缺失a");
     public final static ExceptionsEnum CADRE_FILE_MISS = new ExceptionsEnum("1005", "该干部文件缺失，请补全材料后再试");
 
     public ExceptionsEnum(String code, String msg) {
