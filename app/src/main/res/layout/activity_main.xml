@@ -141,7 +141,7 @@
                         android:textSize="26px"
                         android:paddingLeft="5px"
                         android:imeOptions="actionSearch"
-                        android:hint="\u3000搜\u3000索"
+                        android:hint="\u3000搜索"
                         android:singleLine="true" />
                 </LinearLayout>
 

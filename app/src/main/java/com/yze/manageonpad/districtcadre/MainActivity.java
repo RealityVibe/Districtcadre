@@ -156,23 +156,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 /* 大表加载完成 */
                 case EVENT_TIME_TO_INIT:
-//                    progressDialog.dismiss();
+                    progressDialog.dismiss();
                     break;
                 /* 源文件异常 */
                 case FILE_NOT_FOUND: // 数据文件异常
                     Toast.makeText(MainActivity.this, "未发现源数据文件或数据异常", Toast.LENGTH_LONG).show();
-//                    progressDialog.dismiss();
+                    progressDialog.dismiss();
                     break;
                 case CEHCK_COUNTY:
-                  /*  LinearLayout loadLayout = (LinearLayout)findViewById(R.id.layout_load);
-                    loadLayout.setVisibility(View.GONE);*/
                     typeGroup.check(R.id.area_button);
                     break;
                 case PROGRESS_START:
                     progressDialogTip();
                     break;
                 case PROGRESS_END:
-//                    progressDialog.dismiss();
+                    progressDialog.dismiss();
                     break;
             }
         }
@@ -250,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public static void dismissProgress() {
-//        progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     private void buildDataCollections() throws Exception {
@@ -273,10 +271,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "请检查数据文件是否正确", Toast.LENGTH_LONG).show();
         }
         param = new CadresParams(directApartmentsList, countyApartmentsList, cadresMatrix, presentNum, cadresMap);
-/*        ((DirectFragment) directFragment).setCadresParams(param);
-        ((CountyFragment) countyFragment).setCadresParams(param);
-        ((BackFragment) backupFragment).setCadresParams(param);
-        ((ResearcherFragment) researcherFragment).setCadresParams(param);*/
     }
 
     private void initFragmentsData() {
@@ -287,8 +281,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             presentNum[tmp_bmbh] = presentNum[tmp_bmbh] + 1; //该部门人数+1
             cadresMap.put(String.valueOf(tmp_bmbh) + c.getXm(), c);//Cadre对象放Map
         }
-/*        ((DirectFragment)directFragment).notifyDataSetChanged();
-        ((CountyFragment)countyFragment).notifyDataSetChanged();*/
     }
 
     //    初始化搜索按钮
@@ -571,10 +563,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     数据加载进度
     * */
     public void progressDialogTip() {
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setCancelable(true);
-//        progressDialog.setMessage("正在加载数据，请稍等...");
-//        progressDialog.show();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("正在加载数据，请稍等...");
+        progressDialog.show();
     }
 
     class InitThread extends Thread {
