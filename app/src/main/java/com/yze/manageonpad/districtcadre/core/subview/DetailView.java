@@ -17,13 +17,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.yze.manageonpad.districtcadre.BuildConfig;
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.ResultAdapter;
 import com.yze.manageonpad.districtcadre.model.Cadre;
-import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.CadreUtils;
 import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
@@ -33,6 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static android.support.v4.content.FileProvider.getUriForFile;
 import static com.yze.manageonpad.districtcadre.MainActivity.NavigationBarStatusBar;
@@ -46,15 +46,13 @@ public class DetailView extends AppCompatActivity {
     private TextView backbtn;
     private RecyclerView resultView;
     private TextView numText;
-    private TextView apartmentText;
     private FragmentTabHost mTabHost;
     private LayoutInflater mInflater;
     private List<Cadre> cadreList = new ArrayList<Cadre>();
     private int listNum = 0;
-    private String search_condition;
     private ResultAdapter resultAdapter;
-    private LinearLayout searchTitle;
-    private LinearLayout resultTitle;
+    @BindView(R.id.search_title) LinearLayout searchTitle;
+    @BindView(R.id.result_row) LinearLayout resultTitle;
     private float x1 = 0;
     private float x2 = 0;
     private float y1 = 0;
@@ -64,6 +62,7 @@ public class DetailView extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_view);
+        ButterKnife.bind(this);
 
         NavigationBarStatusBar(this, true);
         LinearLayout mainContent = (LinearLayout) findViewById(R.id.detail_content);
@@ -74,17 +73,14 @@ public class DetailView extends AppCompatActivity {
             }
         });
         //  设置标题栏高度
-        searchTitle = (LinearLayout) findViewById(R.id.search_title);
         searchTitle.getLayoutParams().height = 110;
-
-        resultTitle = (LinearLayout) findViewById(R.id.result_row);
         resultTitle.getLayoutParams().height = 100;
         ((LinearLayout.LayoutParams) resultTitle.getLayoutParams()).topMargin = 10;
 
         //  加载表中数据
         initResultView();
         //从intent获取上个Activity的数据
-        getMsgFromIntent();
+        getMsgFromIntent(getIntent());
 
         //  返回按钮
         backbtn = (TextView) findViewById(R.id.backtn);
@@ -148,22 +144,6 @@ public class DetailView extends AppCompatActivity {
         return msg;
     }
 
-    //读取json转换成类
-    public void parseJSONWithGSON(String jsonData) {
-        cadreList.clear();
-        Gson gson = new Gson();
-        List<Cadre> tmpList = gson.fromJson(jsonData, new TypeToken<List<Cadre>>() {
-        }.getType());
-        int num = 0;
-        for (Cadre cadre : tmpList) {
-            if (cadre.getXm().contains(search_condition))
-                cadreList.add(cadre);
-        }
-
-        //更新RecyclerView
-        resultAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //继承了Activity的onTouchEvent方法，直接监听点击事件
@@ -178,33 +158,18 @@ public class DetailView extends AppCompatActivity {
             y2 = event.getY();
             Log.d("move length", "onTouchEvent: x2" + String.valueOf(x2) + "  / x1"  + String.valueOf(x1));
             if(x2 - x1 > 50) {
-//                Toast.makeText(MainActivity.this, "向右滑", Toast.LENGTH_SHORT).show();
                 DetailView.this.finish();
             }
         }
         return super.onTouchEvent(event);
     }
 
-    //读取json转换成类
-    private void parseJSONWithGSONByBmbh(String jsonData) {
-        cadreList.clear();
-        Gson gson = new Gson();
-        List<Cadre> tmpList = gson.fromJson(jsonData, new TypeToken<List<Cadre>>() {
-        }.getType());
-        int num = 0;
-        for (Cadre cadre : tmpList) {
-            if (cadre.getBmbh().equals(search_condition))
-                cadreList.add(cadre);
-        }
-
-        //更新RecyclerView
-        resultAdapter.notifyDataSetChanged();
-    }
-
-    private void getMsgFromIntent() {
-        switch (getIntent().getStringExtra("intent_type")) {//点击单个干部
+    private void getMsgFromIntent(Intent intent) {
+        String search_condition;
+        TextView apartmentText;
+        switch (intent.getStringExtra("intent_type")) {//点击单个干部
             case "single_cadre":
-                Cadre tmp_cadre = (Cadre) getIntent().getSerializableExtra("cadre_object");
+                Cadre tmp_cadre = (Cadre) intent.getSerializableExtra("cadre_object");
                 apartmentText = (TextView) findViewById(R.id.search_item);
                 apartmentText.setText(tmp_cadre.getXm());
                 cadreList.clear();
@@ -214,7 +179,7 @@ public class DetailView extends AppCompatActivity {
                 break;
 //                搜索视图
             case "search_result": //初始化recyclerView
-                search_condition = getIntent().getStringExtra("search_condition");
+                search_condition = intent.getStringExtra("search_condition");
                 apartmentText = (TextView) findViewById(R.id.search_item);
                 //更新条件值
                 apartmentText.setText("搜索 \"" + search_condition + "\" 的结果");
@@ -226,12 +191,10 @@ public class DetailView extends AppCompatActivity {
                 break;
 //                部门搜索视图
             case "search_by_apartment":
-                Intent intent = getIntent();
                 search_condition = intent.getStringExtra("bmbh");
                 apartmentText = (TextView) findViewById(R.id.search_item);
                 //更新条件值
-                apartmentText.setText(getIntent().getStringExtra("bmmz").toString());
-//                parseJSONWithGSONByBmbh(ReadDayDayString(getContext(), "data.txt"));//王
+                apartmentText.setText(intent.getStringExtra("bmmz").toString());
                 List<Cadre> tmpCadreList2 = CadreUtils.getCadreListByApartment(param, search_condition);
                 for (Cadre c : tmpCadreList2)
                     cadreList.add(c);

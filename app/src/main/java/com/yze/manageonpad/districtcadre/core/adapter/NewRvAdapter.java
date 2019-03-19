@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
+import com.yze.manageonpad.districtcadre.core.subview.CardDetailView;
 import com.yze.manageonpad.districtcadre.core.subview.DetailView;
 import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
@@ -78,7 +79,7 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             break;
                         }
                     }
-                    Intent intent = new Intent(mContext, DetailView.class);
+                    Intent intent = new Intent(mContext, CardDetailView.class);
                     //将获取到的干部对象传递给detailView
                     intent.putExtra("intent_type", "search_by_apartment");
                     intent.putExtra("bmbh", tmp_bmbh);
@@ -191,7 +192,7 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     public void onClick(View view) {
                         if (!nm.equals("")) {
                             String str = nm;
-                            Intent intent = new Intent(mContext, DetailView.class);
+                            Intent intent = new Intent(mContext, CardDetailView.class);
                             //将获取到的干部对象传递给detailView
                             intent.putExtra("intent_type", "single_cadre");
                             intent.putExtra("cadre_object", tmpc);

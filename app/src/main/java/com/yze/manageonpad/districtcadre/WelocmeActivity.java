@@ -72,10 +72,6 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         NavigationBarStatusBar(this, true);
 
         //添加点击事件
-//        countyBtn = (Button) findViewById(R.id.welcome_county);
-//        directBtn = (Button) findViewById(R.id.welcome_direct);
-//        backupBtn = (Button) findViewById(R.id.welcome_backup);
-//        investBtn = (Button) findViewById(R.id.welcome_researcher);
         countyBtn.setOnClickListener(this);
         directBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
@@ -83,7 +79,6 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
 //        gesture_ll.setVisibility(View.GONE);
         welcome_ll.setVisibility(View.VISIBLE);
 //        initGesture();
-//        dialog = createLoadDialog(WelocmeActivity.this);
     }
 
     //横屏锁定
