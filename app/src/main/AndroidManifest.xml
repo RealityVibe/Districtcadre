@@ -46,7 +46,7 @@
     </provider>
     <activity android:name=".MainActivity">
     </activity>
-    <activity android:name=".DetailView" />
+    <activity android:name=".core.subview.DetailView" />
     <activity android:name=".UpdateSQLite" />
     <activity android:name=".WelocmeActivity">
         <intent-filter>

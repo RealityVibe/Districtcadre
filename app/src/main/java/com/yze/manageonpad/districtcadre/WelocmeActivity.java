@@ -3,7 +3,9 @@ package com.yze.manageonpad.districtcadre;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -27,15 +29,19 @@ import butterknife.ButterKnife;
 import static com.yze.manageonpad.districtcadre.MainActivity.NavigationBarStatusBar;
 
 public class WelocmeActivity extends AppCompatActivity implements View.OnClickListener {
-//    @BindView(R.id.welcome_county) private Button countyBtn;
-    @BindView(R.id.welcome_direct) private Button directBtn;
-    @BindView(R.id.welcome_backup) private Button backupBtn;
-    @BindView(R.id.welcome_researcher) private Button investBtn;
-/*    @BindView(R.id.welcome_bdg) private ImageView imgView;
-    @BindView(R.id.welcome_ll) private LinearLayout welcome_ll;*/
-    @BindView(R.id.gesture_ll) private LinearLayout gesture_ll;
-    @BindView(R.id.tv_state) private TextView tv_state;
-    @BindView(R.id.reset_rb) private CheckBox reset_rb;
+    @BindView(R.id.welcome_county)
+    Button countyBtn;
+    @BindView(R.id.welcome_direct)
+    Button directBtn;
+    @BindView(R.id.welcome_backup)
+    Button backupBtn;
+    @BindView(R.id.welcome_researcher)
+    Button investBtn;
+    /*    @BindView(R.id.welcome_bdg) private ImageView imgView;*/
+    @BindView(R.id.welcome_ll) LinearLayout welcome_ll;
+//    @BindView(R.id.gesture_ll) private LinearLayout gesture_ll;
+ /*   @BindView(R.id.tv_state) private TextView tv_state;
+    @BindView(R.id.reset_rb) private CheckBox reset_rb;*/
     private long exitTime = 0;
     private static Dialog dialog;
     //    private GestureLockViewGroup mGestureLockViewGroup;
@@ -59,17 +65,23 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_welocme);
         ButterKnife.bind(this);
 
         activityManager.addActivity(this);
-        setContentView(R.layout.activity_welocme);
         NavigationBarStatusBar(this, true);
 
         //添加点击事件
-//        countyBtn.setOnClickListener(this);
+//        countyBtn = (Button) findViewById(R.id.welcome_county);
+//        directBtn = (Button) findViewById(R.id.welcome_direct);
+//        backupBtn = (Button) findViewById(R.id.welcome_backup);
+//        investBtn = (Button) findViewById(R.id.welcome_researcher);
+        countyBtn.setOnClickListener(this);
         directBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
         investBtn.setOnClickListener(this);
+//        gesture_ll.setVisibility(View.GONE);
+        welcome_ll.setVisibility(View.VISIBLE);
 //        initGesture();
 //        dialog = createLoadDialog(WelocmeActivity.this);
     }

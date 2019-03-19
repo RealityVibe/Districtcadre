@@ -7,7 +7,7 @@
     android:background="#1d4c7b"
     android:gravity="center"
     android:orientation="vertical">
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/gesture_ll"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -28,7 +28,7 @@
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:text="修改密码"/>
-<!--        <com.syd.oden.gesturelock.view.GestureLockViewGroup
+&lt;!&ndash;        <com.syd.oden.gesturelock.view.GestureLockViewGroup
             android:id="@+id/gesturelock"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -37,10 +37,10 @@
             app:color_no_finger="#f8f8f8"
             app:preference_id="1"
             android:layout_marginTop="30dp"
-            app:count="4" />-->
-    </LinearLayout>
+            app:count="4" />&ndash;&gt;
+    </LinearLayout>-->
 
-    <!--
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -109,7 +109,7 @@
                 android:gravity="center"
                 android:padding="40dp"
                 android:orientation="horizontal"
-                >-->
+                >
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -184,6 +184,6 @@
         </LinearLayout>
 
 
-    <!--</FrameLayout>-->
+    </FrameLayout>
 
-<!--</LinearLayout>-->
+</LinearLayout>

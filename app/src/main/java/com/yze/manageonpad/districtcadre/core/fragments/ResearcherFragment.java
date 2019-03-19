@@ -18,9 +18,10 @@ import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.ResearchAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.ExceptionsEnum;
 import com.yze.manageonpad.districtcadre.model.Apartment;
-import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.FileOperationUtils;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
+import static com.yze.manageonpad.districtcadre.MainActivity.param;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +44,8 @@ public class ResearcherFragment extends Fragment {
     private List<String> cadreList = new ArrayList<String>();
     private List<String> fullList = new ArrayList<String>();
     private ResearchAdapter mAdapter; //这当然是适配器啦
-    private CadresParams cadresParams;
     // 调研员大表rv
-    @BindView(R.id.county_fragment_recyclerview) RecyclerView mRecyclerView;
+    @BindView(R.id.researcher_fragment_recyclerview) RecyclerView mRecyclerView;
     // 单位表
     private List<Apartment> apartments = new ArrayList<Apartment>();
 
@@ -92,8 +92,8 @@ public class ResearcherFragment extends Fragment {
     //初始化布局View
     public void initView() {
         //对干部List赋值
-        apartments.addAll(cadresParams.getCaNameList());
-        apartments.addAll(cadresParams.getDaNameList());
+        apartments.addAll(param.getCaNameList());
+        apartments.addAll(param.getDaNameList());
         apartments.remove(0);
         try {
             cadreList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "invest");
@@ -126,13 +126,5 @@ public class ResearcherFragment extends Fragment {
         if (isNull)
             cadreList.addAll(fullList);
         return isNull;
-    }
-
-    public CadresParams getCadresParams() {
-        return cadresParams;
-    }
-
-    public void setCadresParams(CadresParams cadresParams) {
-        this.cadresParams = cadresParams;
     }
 }

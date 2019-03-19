@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 
@@ -26,7 +27,7 @@ import java.util.List;
 
 /**
  * @author yze
- *
+ * <p>
  * 2019/3/1.
  */
 public class JSONUtils {
@@ -100,6 +101,7 @@ public class JSONUtils {
         List<Cadre> cadreList = new ArrayList<>();
         try {
             String text = getContentString(jsonData, c);
+
             if (text != null) {
                 JSONObject object = new JSONObject(text);
                 JSONArray array = object.getJSONArray("cadres");
@@ -139,9 +141,7 @@ public class JSONUtils {
                 }
                 return cadreList;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -173,7 +173,18 @@ public class JSONUtils {
     }
 
     private static String getContentString(String jsonData, Context c) throws IOException {
-        String result = "";
+
+        // 从raw目录读取
+        InputStream is = c.getResources().openRawResource(R.raw.sourcedata);
+        BufferedReader read = new BufferedReader(new InputStreamReader(is));
+        String line = "";
+        StringBuffer sb = new StringBuffer();
+        while((line = read.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        String txt = sb.toString();
+        return  new String(txt.getBytes("UTF-8"), "UTF-8");
+        /*String result = "";
         FileInputStream f = null;
         if (ContextCompat.checkSelfPermission(c, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -186,7 +197,7 @@ public class JSONUtils {
         while ((line = bis.readLine()) != null) {
             result += line;
         }
-        return new String(result.getBytes("UTF-8"), "UTF-8");
+        return new String(result.getBytes("UTF-8"), "UTF-8");*/
     }
 
     /*
@@ -281,7 +292,6 @@ public class JSONUtils {
             file.delete();
         }
     }
-
 
 
     public List<Cadre> reSortList(List<Cadre> cadres) {

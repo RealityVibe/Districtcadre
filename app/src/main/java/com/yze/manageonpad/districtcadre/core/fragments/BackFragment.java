@@ -18,9 +18,9 @@ import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.ResearchAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.ExceptionsEnum;
 import com.yze.manageonpad.districtcadre.model.Apartment;
-import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.FileOperationUtils;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
+import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +40,8 @@ public class BackFragment extends Fragment {
      * */
     private String sc;
     private ResearchAdapter mAdapter;
-    private CadresParams cadresParams;
     private String type;
     // 调研员大表rv
-    @BindView(R.id.county_fragment_recyclerview)
     RecyclerView mRecyclerView;
     private List<String> investList = new ArrayList<String>();
     private List<String> fullList = new ArrayList<String>();
@@ -60,6 +58,7 @@ public class BackFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_researcher, container, false);
         ButterKnife.bind(this, view);
         /*注册广播*/
+        mRecyclerView = view.findViewById(R.id.researcher_fragment_recyclerview);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager
                 .getInstance(getActivity());
         IntentFilter intentFilter = new IntentFilter();
@@ -91,7 +90,7 @@ public class BackFragment extends Fragment {
     //初始化布局View
     public void initView() {
         //对干部List赋值
-        cadresParams.getAllNameList().remove(0);
+        param.getAllNameList().remove(0);
         try {
             investList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "bk_person");
             fullList.addAll(investList);
@@ -122,15 +121,6 @@ public class BackFragment extends Fragment {
         if (isNull)
             investList.addAll(fullList);
         return isNull;
-    }
-
-
-    public CadresParams getCadresParams() {
-        return cadresParams;
-    }
-
-    public void setCadresParams(CadresParams cadresParams) {
-        this.cadresParams = cadresParams;
     }
 
     public String getName() {

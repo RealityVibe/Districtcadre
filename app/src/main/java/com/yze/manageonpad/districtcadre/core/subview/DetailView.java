@@ -25,6 +25,7 @@ import com.yze.manageonpad.districtcadre.core.adapter.ResultAdapter;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.CadreUtils;
+import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
 
 import java.io.File;
@@ -54,7 +55,6 @@ public class DetailView extends AppCompatActivity {
     private ResultAdapter resultAdapter;
     private LinearLayout searchTitle;
     private LinearLayout resultTitle;
-    private CadresParams cadresParams;
     private float x1 = 0;
     private float x2 = 0;
     private float y1 = 0;
@@ -105,7 +105,7 @@ public class DetailView extends AppCompatActivity {
     private void initResultView() {
         numText = (TextView) findViewById(R.id.search_num);
         resultView = (RecyclerView) findViewById(R.id.result_recycler_view);
-        resultAdapter = new ResultAdapter(cadreList, cadresParams, DetailView.this);
+        resultAdapter = new ResultAdapter(cadreList, param, DetailView.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         resultView.setLayoutManager(layoutManager);
         resultView.setAdapter(resultAdapter);
@@ -202,7 +202,6 @@ public class DetailView extends AppCompatActivity {
     }
 
     private void getMsgFromIntent() {
-        cadresParams = (CadresParams) getIntent().getSerializableExtra("cadreParams");
         switch (getIntent().getStringExtra("intent_type")) {//点击单个干部
             case "single_cadre":
                 Cadre tmp_cadre = (Cadre) getIntent().getSerializableExtra("cadre_object");
@@ -219,7 +218,7 @@ public class DetailView extends AppCompatActivity {
                 apartmentText = (TextView) findViewById(R.id.search_item);
                 //更新条件值
                 apartmentText.setText("搜索 \"" + search_condition + "\" 的结果");
-                List<Cadre> tmpCadreList = CadreUtils.getCadresListByName(search_condition, cadresParams.getCadreMap());
+                List<Cadre> tmpCadreList = CadreUtils.getCadresListByName(search_condition, param.getCadreMap());
                 for (Cadre c : tmpCadreList)
                     cadreList.add(c);
                 numText.setText("共" + String.valueOf(cadreList.size()) + "条记录");
@@ -228,13 +227,12 @@ public class DetailView extends AppCompatActivity {
 //                部门搜索视图
             case "search_by_apartment":
                 Intent intent = getIntent();
-                CadresParams cadresParams = (CadresParams)intent.getSerializableExtra("cadresParams");
                 search_condition = intent.getStringExtra("bmbh");
                 apartmentText = (TextView) findViewById(R.id.search_item);
                 //更新条件值
                 apartmentText.setText(getIntent().getStringExtra("bmmz").toString());
 //                parseJSONWithGSONByBmbh(ReadDayDayString(getContext(), "data.txt"));//王
-                List<Cadre> tmpCadreList2 = CadreUtils.getCadreListByApartment(cadresParams, search_condition);
+                List<Cadre> tmpCadreList2 = CadreUtils.getCadreListByApartment(param, search_condition);
                 for (Cadre c : tmpCadreList2)
                     cadreList.add(c);
                 numText.setText("共" + String.valueOf(cadreList.size()) + "条记录");
