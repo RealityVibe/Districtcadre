@@ -51,6 +51,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
         <TextView
+            android:id="@+id/change_button"
             android:layout_marginLeft="50px"
             android:padding="2dp"
             android:layout_width="60dp"

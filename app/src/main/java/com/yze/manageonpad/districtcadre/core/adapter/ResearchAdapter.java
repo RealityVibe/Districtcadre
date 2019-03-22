@@ -25,7 +25,6 @@ public class ResearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<String> mNameList = new ArrayList<String>();
     private List<Integer> idList = new ArrayList<Integer>();
     private Context mContext;
-    private String num;
 
     public ResearchAdapter(List<String> nameList, Context context) {
         mNameList = nameList;

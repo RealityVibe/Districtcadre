@@ -118,7 +118,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                 File wordFile2 = new File(docPath, cadre.getXm() + "-" + apartmentList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".doc");
                 File wordFile3 = new File(docPath, cadre.getXm() + ".docx");
                 File wordFile4 = new File(docPath, cadre.getXm() + "-" + apartmentList.get(Integer.valueOf(cadre.getBmbh())).getBmmz() + ".docx");
-//                Toast.makeText(getContext(),cadre.getXm()+"-"+apartmentsList.get(Integer.valueOf(cadre.getBmbh())).getBmmz().toString() , Toast.LENGTH_LONG ).show();
 
                 try {
                     // 调用函数使用外部程序打开

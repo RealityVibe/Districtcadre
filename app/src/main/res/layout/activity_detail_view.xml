@@ -7,54 +7,70 @@
     android:id="@+id/detail_content"
     android:orientation="vertical"
     android:background="@drawable/bkg">
-   <!--8205812158988812-->
+
+
     <LinearLayout
-        android:id="@+id/search_title"
         android:layout_width="match_parent"
-        android:layout_height="110px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:layout_height="105px"
+        android:background="@drawable/title_bar"
         android:orientation="horizontal"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:paddingBottom="3px">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="10px"
+            android:padding="8px"
+            android:src="@drawable/logo_white" />
 
         <TextView
             android:id="@+id/search_item"
-            android:paddingLeft="20px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:background="@drawable/emty_shape"
-            android:text="'张'搜索条件"
+            android:gravity="center"
+            android:paddingLeft="20px"
             android:singleLine="true"
+            android:text="党校"
             android:textColor="#fff"
             android:textSize="50px" />
+
         <TextView
             android:id="@+id/search_num"
-            android:paddingLeft="20px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="共15条"
+            android:gravity="bottom"
+            android:paddingLeft="20px"
+            android:paddingBottom="20px"
+            android:text="记录数：15"
             android:textColor="#fff"
             android:textSize="35px" />
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="right"
-            android:layout_marginRight="20dp">
-            <TextView
-                android:layout_marginTop="8px"
-                android:id="@+id/backtn"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:singleLine="true"
-                android:gravity="center"
-                android:textSize="24px"
-                android:background="@drawable/shape_radius"
-                android:text="返　回"/>
-        </LinearLayout>
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/change_button"
+            android:layout_marginLeft="50px"
+            android:padding="2dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:background="@drawable/shape_cadre_title"
+            android:text="切换视图"/>
+        <TextView
+            android:id="@+id/back_btn"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="20px"
+            android:padding="2dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#000"
+            android:background="@drawable/shape_radius"
+            android:text="返回" />
     </LinearLayout>
 
     <LinearLayout

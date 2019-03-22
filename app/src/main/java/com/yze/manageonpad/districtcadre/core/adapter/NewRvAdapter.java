@@ -79,7 +79,7 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             break;
                         }
                     }
-                    Intent intent = new Intent(mContext, CardDetailView.class);
+                    Intent intent = new Intent(mContext, DetailView.class);
                     //将获取到的干部对象传递给detailView
                     intent.putExtra("intent_type", "search_by_apartment");
                     intent.putExtra("bmbh", tmp_bmbh);
@@ -118,11 +118,6 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             } else {
                 cadrelist = CadreUtils.getCadreListFromMap(prescentNum, cadreMatrix, cadreMap, String.valueOf(mNameList.get(position).getBmbh()));
-/*                if (cadrelist.size() > 0) {
-                    if (22 > Integer.valueOf(cadrelist.get(0).getBmbh())) {
-                        cadrelist = reSortList(cadrelist);
-                    }
-                }*/
 
                 for (TextView tv : ((ViewHolder1) holder).tvList) {
                     tv.setVisibility(View.GONE);
@@ -192,7 +187,7 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     public void onClick(View view) {
                         if (!nm.equals("")) {
                             String str = nm;
-                            Intent intent = new Intent(mContext, CardDetailView.class);
+                            Intent intent = new Intent(mContext, DetailView.class);
                             //将获取到的干部对象传递给detailView
                             intent.putExtra("intent_type", "single_cadre");
                             intent.putExtra("cadre_object", tmpc);

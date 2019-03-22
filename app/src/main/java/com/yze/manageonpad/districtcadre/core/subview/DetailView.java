@@ -1,62 +1,73 @@
 package com.yze.manageonpad.districtcadre.core.subview;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
-import android.os.Build;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yze.manageonpad.districtcadre.BuildConfig;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yze.manageonpad.districtcadre.R;
+import com.yze.manageonpad.districtcadre.core.adapter.CardAdapter;
 import com.yze.manageonpad.districtcadre.core.adapter.ResultAdapter;
+import com.yze.manageonpad.districtcadre.core.enums.NumEnum;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.utils.CadreUtils;
+
 import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.support.v4.content.FileProvider.getUriForFile;
 import static com.yze.manageonpad.districtcadre.MainActivity.NavigationBarStatusBar;
 
 /**
  * @author yze
- *
+ * <p>
  * 2019/2/27.
  */
 public class DetailView extends AppCompatActivity {
-    private TextView backbtn;
-    private RecyclerView resultView;
-    private TextView numText;
-    private FragmentTabHost mTabHost;
-    private LayoutInflater mInflater;
     private List<Cadre> cadreList = new ArrayList<Cadre>();
-    private int listNum = 0;
-    private ResultAdapter resultAdapter;
-    @BindView(R.id.search_title) LinearLayout searchTitle;
-    @BindView(R.id.result_row) LinearLayout resultTitle;
-    private float x1 = 0;
-    private float x2 = 0;
-    private float y1 = 0;
-    private float y2 = 0;
+
+    @BindView(R.id.result_recycler_view)
+    RecyclerView resultView;
+
+    @BindView(R.id.result_row)
+    LinearLayout resultTitle;
+
+    @BindView(R.id.back_btn)
+    TextView backBtn;
+
+    @BindView(R.id.change_button)
+    TextView changeBtn;
+
+    @BindView(R.id.search_num)
+    TextView numText;
+
+    /**
+     * 卡片视图
+     */
+    private final static int CARD_VIEW = 0;
+
+    /**
+     * 表格视图
+     */
+    private final static int BOOK_VIEW = 1;
+
+    private int curViewType = 0;
+    private RecyclerView.Adapter adapter;
+    private float x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,99 +83,81 @@ public class DetailView extends AppCompatActivity {
                 NavigationBarStatusBar(DetailView.this, true);
             }
         });
-        //  设置标题栏高度
-        searchTitle.getLayoutParams().height = 110;
-        resultTitle.getLayoutParams().height = 100;
-        ((LinearLayout.LayoutParams) resultTitle.getLayoutParams()).topMargin = 10;
 
         //  加载表中数据
-        initResultView();
+        initResultView(CARD_VIEW);
         //从intent获取上个Activity的数据
-        getMsgFromIntent(getIntent());
+        getDataFromIntent(getIntent());
 
-        //  返回按钮
-        backbtn = (TextView) findViewById(R.id.backtn);
-        backbtn.getLayoutParams().height = 60;
-        backbtn.getLayoutParams().width = 150;
-        backbtn.setPadding(15, 0, 15, 0);
-
-        backbtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-
-    }
-
-    private void initResultView() {
-        numText = (TextView) findViewById(R.id.search_num);
-        resultView = (RecyclerView) findViewById(R.id.result_recycler_view);
-        resultAdapter = new ResultAdapter(cadreList, param, DetailView.this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        resultView.setLayoutManager(layoutManager);
-        resultView.setAdapter(resultAdapter);
-    }
-
-    public  Intent getWordFileIntent(Context context, File file) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            Uri uri = getUriForFile(context,
-                    BuildConfig.APPLICATION_ID+ ".fileprovider",
-                    file);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(uri, "application/msword");
-        } else{
-            Uri uri = Uri.fromFile(file);
-            intent.setDataAndType(uri, "application/msword");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        return intent;
-    }
-
-    //读取文件
-    public static String ReadDayDayString(Context context, String fileName) {
-        InputStream is = null;
-        String msg = null;
-        try {
-            is = context.getResources().getAssets().open(fileName);
-            byte[] bytes = new byte[is.available()];
-            is.read(bytes);
-            msg = new String(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        changeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                curViewType = curViewType == CARD_VIEW ? BOOK_VIEW : CARD_VIEW;
+                initResultView(curViewType);
             }
+        });
+
+    }
+
+    /**
+     * 初始化RecyclerView && 切换视图时更新
+     *
+     * @param type 视图类型
+     */
+    private void initResultView(int type) {
+        if (type == CARD_VIEW) {
+            resultTitle.setVisibility(View.GONE);
+            CardAdapter cardAdapter;
+            cardAdapter = new CardAdapter(R.layout.card_item, cadreList);
+            cardAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
+            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(NumEnum.NUM_3.getValue(), StaggeredGridLayoutManager.VERTICAL);
+            resultView.setLayoutManager(layoutManager);
+            resultView.setAdapter(cardAdapter);
+            adapter = cardAdapter;
+        } else {
+            resultTitle.setVisibility(View.VISIBLE);
+            ResultAdapter resultAdapter;
+            resultAdapter = new ResultAdapter(cadreList, param, DetailView.this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            resultView.setLayoutManager(layoutManager);
+            resultView.setAdapter(resultAdapter);
+            adapter = resultAdapter;
         }
-        return msg;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //继承了Activity的onTouchEvent方法，直接监听点击事件
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             //当手指按下的时候
             x1 = event.getX();
             y1 = event.getY();
         }
-        if(event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             //当手指离开的时候
             x2 = event.getX();
             y2 = event.getY();
-            Log.d("move length", "onTouchEvent: x2" + String.valueOf(x2) + "  / x1"  + String.valueOf(x1));
-            if(x2 - x1 > 50) {
+            Log.d("move length", "onTouchEvent: x2" + String.valueOf(x2) + "  / x1" + String.valueOf(x1));
+            if (x2 - x1 > 50) {
                 DetailView.this.finish();
             }
         }
         return super.onTouchEvent(event);
     }
 
-    private void getMsgFromIntent(Intent intent) {
+    /**
+     * 从intent获取数据
+     *
+     * @param intent
+     */
+    private void getDataFromIntent(Intent intent) {
         String search_condition;
         TextView apartmentText;
         switch (intent.getStringExtra("intent_type")) {//点击单个干部
@@ -174,7 +167,7 @@ public class DetailView extends AppCompatActivity {
                 apartmentText.setText(tmp_cadre.getXm());
                 cadreList.clear();
                 cadreList.add(tmp_cadre);
-                resultAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 numText.setVisibility(View.GONE);
                 break;
 //                搜索视图
@@ -187,7 +180,7 @@ public class DetailView extends AppCompatActivity {
                 for (Cadre c : tmpCadreList)
                     cadreList.add(c);
                 numText.setText("共" + String.valueOf(cadreList.size()) + "条记录");
-                resultAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 break;
 //                部门搜索视图
             case "search_by_apartment":
@@ -199,7 +192,7 @@ public class DetailView extends AppCompatActivity {
                 for (Cadre c : tmpCadreList2)
                     cadreList.add(c);
                 numText.setText("共" + String.valueOf(cadreList.size()) + "条记录");
-                resultAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 break;
             default:
                 break;

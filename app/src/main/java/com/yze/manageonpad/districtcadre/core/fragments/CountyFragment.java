@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yze.manageonpad.districtcadre.MainActivity;
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
-import com.yze.manageonpad.districtcadre.model.CadresParams;
 import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
 /**

@@ -10,6 +10,7 @@ import com.yze.manageonpad.districtcadre.core.fragments.BackFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.CountyFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.DirectFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.ResearcherFragment;
+import com.yze.manageonpad.districtcadre.core.subview.CardDetailView;
 import com.yze.manageonpad.districtcadre.core.subview.DetailView;
 import com.yze.manageonpad.districtcadre.model.ActivityManager;
 import com.yze.manageonpad.districtcadre.model.Apartment;

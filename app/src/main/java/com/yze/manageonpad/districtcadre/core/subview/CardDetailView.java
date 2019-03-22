@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.yze.manageonpad.districtcadre.MainActivity;
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.CardAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.NumEnum;
@@ -37,6 +35,9 @@ public class CardDetailView extends AppCompatActivity {
     @BindView(R.id.back_btn)
     TextView backBtn;
 
+    @BindView(R.id.change_button)
+    TextView changeBtn;
+
     private List<Cadre> cadreList = new ArrayList<Cadre>();
     private CardAdapter adapter;
 
@@ -54,12 +55,8 @@ public class CardDetailView extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         getMsgFromIntent(getIntent());
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backBtn.setOnClickListener((View.OnClickListener) this);
+        changeBtn.setOnClickListener((View.OnClickListener) this);
     }
 
     private void getMsgFromIntent(Intent intent) {
@@ -103,6 +100,17 @@ public class CardDetailView extends AppCompatActivity {
         }
     }
 
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_btn:
+                finish();
+                break;
+            default:
+                break;
+
+        }
+
+    }
 
     @Override
     protected void onResume() {
