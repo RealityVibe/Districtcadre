@@ -56,13 +56,8 @@ public class CardDetailView extends AppCompatActivity {
         getMsgFromIntent(getIntent());
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                backBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finish();
-                    }
-                });
+            public void onClick(View view) {
+                finish();
             }
         });
     }
