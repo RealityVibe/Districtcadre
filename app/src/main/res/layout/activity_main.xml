@@ -107,7 +107,8 @@
 
             </RadioGroup>
 
-            <TextView
+<!--            <TextView
+                android:id="@+id/compare_button"
                 android:layout_width="240px"
                 android:layout_height="60px"
                 android:layout_gravity="center"
@@ -118,7 +119,43 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textSize="32px"
-                android:text="干部对比" />
+                android:text="干部对比" />-->
+
+            <LinearLayout
+                android:layout_width="320px"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/compare_left_name"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/left_cadre_shape"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="32px"
+                    android:textColor="#ffffff"
+                    android:text="" />
+                <ImageView
+                    android:id="@+id/compare_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pk_48"/>
+                <TextView
+                    android:id="@+id/compare_right_name"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/right_cadre_shape"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="32px"
+                    android:textColor="#ffffff"
+                    android:text="" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -5,18 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.yze.manageonpad.districtcadre.core.Interfaces.ITransferData;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
 import com.yze.manageonpad.districtcadre.core.fragments.BackFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.CountyFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.DirectFragment;
 import com.yze.manageonpad.districtcadre.core.fragments.ResearcherFragment;
-import com.yze.manageonpad.districtcadre.core.subview.CardDetailView;
+import com.yze.manageonpad.districtcadre.core.subview.CompareView;
 import com.yze.manageonpad.districtcadre.core.subview.DetailView;
 import com.yze.manageonpad.districtcadre.model.ActivityManager;
 import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
+import com.yze.manageonpad.districtcadre.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +59,14 @@ import java.util.Map;
  * <p>
  * 2019/3/1.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ITransferData {
     private static final int EVENT_TIME_TO_CHANGE_IMAGE = 100;
     private static final int EVENT_TIME_TO_INIT = 1;
     private static final int COUNTY = 1, DIRECT = 2, BACKUP = 3, RESEARCHER = 4;
+    public static boolean COMPARE_SINGNAL_LEFT = false;
+    public static boolean COMPARE_SINGNAL_RIGHT = false;
+    public static String leftName;
+    public static String rightName;
     /*
      * 文件未找到
      * */
@@ -110,6 +116,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.search_button)
     ImageView searchImage;
 
+    @BindView(R.id.compare_button)
+    ImageView compareBtn;
+
+    @BindView(R.id.compare_left_name)
+    TextView compareLeftName;
+
+    @BindView(R.id.compare_right_name)
+    TextView compareRightName;
     /**
      * activity管理器
      */
@@ -252,6 +266,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.dismiss();
     }
 
+    /**
+     * 读取json文件，构建大表数据
+     * @throws Exception
+     */
     private void buildDataCollections() throws Exception {
         //从json获取数据
         countyApartmentsList = JSONUtils.parseApartmentsFromJSON("sourcedata.json", this, "1");
@@ -313,6 +331,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 //调用搜索方法
                 search_func();
+            }
+        });
+
+        compareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CompareView.class);
+                if(leftName == null || rightName ==null){
+                    Toast.makeText(getBaseContext(), "请选择要比较的干部", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 尚未做重名处理
+                    intent.putExtra("leftName", leftName);
+                    intent.putExtra("rightName", rightName);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        compareRightName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                COMPARE_SINGNAL_RIGHT = COMPARE_SINGNAL_RIGHT == false;
+            }
+        });
+
+        compareLeftName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                COMPARE_SINGNAL_LEFT = COMPARE_SINGNAL_LEFT == false;
             }
         });
 
@@ -570,6 +617,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.show();
     }
 
+    @Override
+    public void changeTextViewData(String leftName, String rightName) {
+        if(!StringUtils.isNullOrEmpty(leftName)){
+            compareLeftName.setText(leftName);
+        }
+        if(!StringUtils.isNullOrEmpty(rightName)) {
+            compareRightName.setText(rightName);
+        }
+    }
+
     class InitThread extends Thread {
         @Override
         public void run() {
@@ -592,5 +649,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public CadresParams getParam() {
         return param;
     }
-
 }

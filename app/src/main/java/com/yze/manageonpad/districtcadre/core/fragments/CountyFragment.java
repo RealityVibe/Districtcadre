@@ -1,5 +1,7 @@
 package com.yze.manageonpad.districtcadre.core.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yze.manageonpad.districtcadre.MainActivity;
 import com.yze.manageonpad.districtcadre.R;
+import com.yze.manageonpad.districtcadre.core.Interfaces.ITransferData;
 import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
+
 import static com.yze.manageonpad.districtcadre.MainActivity.param;
 
 /**
@@ -22,6 +27,7 @@ public class CountyFragment extends Fragment {
     private View view;
     private RecyclerView mRecyclerView;
     private NewRvAdapter mAdapter;
+    private ITransferData transferData;
 
     @Override
     public View onCreateView(LayoutInflater inflate, ViewGroup container,
@@ -39,8 +45,16 @@ public class CountyFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.county_fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new NewRvAdapter(this.getContext(), param, CadreType.COUNTY);
+        mAdapter = new NewRvAdapter(this.getContext(), param, CadreType.COUNTY, transferData);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context != null) {
+            transferData = (ITransferData) context;
+        }
     }
 
     public String getName() {

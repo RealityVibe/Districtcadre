@@ -48,7 +48,7 @@
     </activity>
     <activity android:name=".core.subview.DetailView" />
     <activity android:name=".core.subview.CardDetailView" />
-    <activity android:name=".UpdateSQLite" />
+    <activity android:name=".core.subview.CompareView" />
     <activity android:name=".WelocmeActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

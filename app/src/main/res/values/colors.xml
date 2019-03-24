@@ -9,5 +9,14 @@
     <color name="colorChecked">#000</color>
     <color name="colorNotChecked">#fff</color>
     <color name="textcolor_white">#fff</color>
+    <color name="title_color">#520e6a</color>
+    <color name="item_color">#292f3a</color>
+    <color name="left_cadre_color">#6a6da9</color>
+    <color name="right_cadre_color">#ffc20e</color>
+    <color name="graph_red">#f6855e</color>
+    <color name="graph_2">#9bddef</color>
+    <color name="graph_3">#d3cd4f</color>
+    <color name="graph_4">#cfad5c</color>
+    <color name="graph_5">#2273ad</color>
     // 大表选择RadioButton 未选择时的背景色
 </resources>

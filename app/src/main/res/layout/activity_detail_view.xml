@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detail_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    android:id="@+id/detail_content"
+    android:background="@drawable/bkg"
     android:orientation="vertical"
-    android:background="@drawable/bkg">
-
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,203 +50,224 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
         <TextView
             android:id="@+id/change_button"
-            android:layout_marginLeft="50px"
-            android:padding="2dp"
-            android:layout_width="60dp"
+            android:layout_width="200px"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            android:layout_marginLeft="50px"
             android:background="@drawable/shape_cadre_title"
-            android:text="切换视图"/>
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="切换视图"
+            android:textColor="#fff" />
+
         <TextView
-            android:id="@+id/back_btn"
+            android:id="@+id/graphica_data"
+            android:layout_width="240px"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:layout_marginRight="20px"
-            android:padding="2dp"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#000"
             android:background="@drawable/shape_radius"
-            android:text="返回" />
+            android:drawableLeft="@drawable/graph_icon_48"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="统计图表"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/back_btn"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="20px"
+            android:background="@drawable/shape_radius"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="返回"
+            android:textColor="#000" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/result_row"
-        android:paddingLeft="15px"
-        android:paddingRight="15px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="15px"
+        android:paddingRight="15px">
+
         <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="66"
-            android:layout_height="match_parent"
             android:background="@drawable/searchresult_first"
-            android:textSize="26px"
             android:gravity="center"
-            android:text="姓\u3000名"/>
-
-        <TextView
-            android:textColor="@drawable/textcolor_white"
             android:paddingTop="5px"
             android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="166"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="现任职务"/>
-
-        <TextView
+            android:text="姓\u3000名"
             android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="30"
-            android:paddingLeft="3px"
-            android:paddingRight="3px"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="性别"/>
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="70"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="出生年月"/>
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="100"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="籍贯"/>
-
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="80"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="全日制学历"/>
-
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="123"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="毕业院校"/>
-
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="80"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="最高学历"/>
-
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="70"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:gravity="center"
-            android:text="参加工作时间"
             android:textSize="26px" />
-        <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
-            android:layout_width="0dp"
-            android:layout_weight="70"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="入党时间"/>
 
         <TextView
-            android:textColor="@drawable/textcolor_white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="166"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
             android:paddingTop="5px"
             android:paddingBottom="5px"
+            android:text="现任职务"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
             android:paddingLeft="3px"
+            android:paddingTop="5px"
             android:paddingRight="3px"
-            android:layout_width="0dp"
-            android:layout_weight="70"
-            android:layout_height="match_parent"
-            android:background="@drawable/searchresult_first"
-            android:textSize="26px"
-            android:gravity="center"
-            android:text="任现职时间"/>
+            android:paddingBottom="5px"
+            android:text="性别"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
 
         <TextView
-            android:textColor="@drawable/textcolor_white"
-            android:paddingTop="5px"
-            android:paddingBottom="5px"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="70"
-            android:layout_height="match_parent"
             android:background="@drawable/searchresult_first"
-            android:textSize="26px"
             android:gravity="center"
-            android:text="分管"/>
-        <TextView
-            android:textColor="@drawable/textcolor_white"
             android:paddingTop="5px"
             android:paddingBottom="5px"
+            android:text="出生年月"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
             android:layout_width="0dp"
-            android:layout_weight="50"
             android:layout_height="match_parent"
+            android:layout_weight="100"
             android:background="@drawable/searchresult_first"
-            android:textSize="26px"
             android:gravity="center"
-            android:text="备注"/>
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="籍贯"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="全日制学历"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="123"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="毕业院校"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="最高学历"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="参加工作时间"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="入党时间"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingLeft="3px"
+            android:paddingTop="5px"
+            android:paddingRight="3px"
+            android:paddingBottom="5px"
+            android:text="任现职时间"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="分管"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:background="@drawable/searchresult_first"
+            android:gravity="center"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"
+            android:text="备注"
+            android:textColor="@drawable/textcolor_white"
+            android:textSize="26px" />
 
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:paddingLeft="15px"
-        android:paddingRight="15px"
         android:id="@+id/result_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp">
-        
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="15px"
+        android:paddingRight="15px">
+
     </android.support.v7.widget.RecyclerView>
 
 

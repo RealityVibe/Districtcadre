@@ -36,6 +36,10 @@ public class Cadre extends DataSupport implements Serializable {
     private String dpl;//民主推荐情况-得票率
     private String scsfhb;//上次是否为后备干部
 
+    public Cadre(){
+
+    }
+
     // 调研员
     public Cadre(String xm, String bmbh) {
         this.xm = xm;

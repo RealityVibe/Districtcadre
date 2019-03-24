@@ -1,5 +1,7 @@
 package com.yze.manageonpad.districtcadre.core.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yze.manageonpad.districtcadre.R;
+import com.yze.manageonpad.districtcadre.core.Interfaces.ITransferData;
 import com.yze.manageonpad.districtcadre.core.adapter.NewRvAdapter;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
 import static com.yze.manageonpad.districtcadre.MainActivity.param;
@@ -23,6 +26,7 @@ public class DirectFragment extends Fragment {
     private View view;
     private RecyclerView mRecyclerView;
     private NewRvAdapter mAdapter;
+    private ITransferData transferData;
     @Override
     public View onCreateView(LayoutInflater inflate, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,11 +42,18 @@ public class DirectFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.direct_fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new NewRvAdapter(this.getContext(), param, CadreType.DIRECT);
+        mAdapter = new NewRvAdapter(this.getContext(), param, CadreType.DIRECT, transferData);
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context != null) {
+            transferData = (ITransferData) context;
+        }
+    }
 
     public String getName() {
         return "DirectFragment";

@@ -11,19 +11,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yze.manageonpad.districtcadre.R;
+import com.yze.manageonpad.districtcadre.core.Interfaces.ITransferData;
 import com.yze.manageonpad.districtcadre.core.enums.CadreType;
-import com.yze.manageonpad.districtcadre.core.subview.CardDetailView;
 import com.yze.manageonpad.districtcadre.core.subview.DetailView;
 import com.yze.manageonpad.districtcadre.model.Apartment;
 import com.yze.manageonpad.districtcadre.model.Cadre;
 import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.CadreUtils;
+import com.yze.manageonpad.districtcadre.utils.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.yze.manageonpad.districtcadre.MainActivity.COMPARE_SINGNAL_LEFT;
+import static com.yze.manageonpad.districtcadre.MainActivity.COMPARE_SINGNAL_RIGHT;
+import static com.yze.manageonpad.districtcadre.MainActivity.leftName;
+import static com.yze.manageonpad.districtcadre.MainActivity.rightName;
 
 /**
  * @author yze
@@ -39,14 +46,20 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private String[][] cadreMatrix;
     private int[] prescentNum;
     private Map<String, Cadre> cadreMap;
+    private TextView leftCadre;
+    private TextView rightCadre;
     private String num;
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
+    public ITransferData transferData;
 
-    public NewRvAdapter(Context context, CadresParams params, CadreType type) {
+    public NewRvAdapter(Context context, CadresParams params, CadreType type, ITransferData transferData) {
         mNameList = CadreType.COUNTY.equals(type) ? params.getCaNameList() : params.getDaNameList();
         mContext = context;
         this.cadreMatrix = params.getCadreMatrix();
         this.cadreMap = params.getCadreMap();
         this.prescentNum = params.getPrescentNum();
+        this.transferData = transferData;
     }
 
     @Override
@@ -64,13 +77,13 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder1) {
-            ((ViewHolder1) holder).departName.setText(mNameList.get(position).getBmmz().toString());
+            ((ViewHolder1) holder).departName.setText(mNameList.get(position).getBmmz());
             ((ViewHolder1) holder).departName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    String bmmz = holder.departName.getText().toString();
+
                     String bmmz = mNameList.get(position).getBmmz();
                     String tmp_bmbh = null;
                     for (Apartment apart : mNameList) {
@@ -92,10 +105,7 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
             cadrelist.clear();
             if (CadreType.COUNTY.getCode() == mNameList.get(position).getBmbh()) {
-           /*     String[] titles = new String[]{"书记", "镇长", "人大主席", "副书记", "纪委书记", "组织",
-                        "宣传统战", "文教", "经济", "城建", "农业", "人武", "派出所长"
-                        , "副主席", "副主席", "不定"};*/
-
+                // 镇街标题行
                 String[] titles = mContext.getResources().getStringArray(R.array.countyTitleList);
                 for (int i = 0; i < titles.length; ++i) {
                     Cadre tmpCadre = new Cadre(titles[i], "1");
@@ -106,12 +116,19 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     tv.setVisibility(View.GONE);
                 }
                 for (int i = 0; i < (cadrelist.size()); ++i) {
-                    ((ViewHolder1) holder).tvList.get(i).setText(cadrelist.get(i).getXm());
-
                     GradientDrawable gd = new GradientDrawable();//创建drawable
-                    gd.setColor(Color.parseColor("#520e6a"));
                     gd.setStroke(2, Color.parseColor("#292f3a"));
                     gd.setCornerRadius(5);
+
+                    if (COMPARE_SINGNAL_LEFT && leftName.equals(cadrelist.get(i).getXm())) {
+                        gd.setColor(mContext.getResources().getColor(R.color.left_cadre_color));
+                    } else if (COMPARE_SINGNAL_RIGHT && rightName.equals(cadrelist.get(i).getXm())) {
+                        gd.setColor(mContext.getResources().getColor(R.color.right_cadre_color));
+                    } else {
+                        gd.setColor(Color.parseColor("#520e6a"));
+                    }
+
+                    ((ViewHolder1) holder).tvList.get(i).setText(cadrelist.get(i).getXm());
                     ((ViewHolder1) holder).tvList.get(i).setBackgroundDrawable(gd);
                     ((ViewHolder1) holder).tvList.get(i).setVisibility(View.VISIBLE);
                     gd = null;
@@ -125,25 +142,70 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 for (int i = 0; i < (cadrelist.size()); ++i) {
                     final String nm = cadrelist.get(i).getXm();
                     final Cadre tmpc = cadrelist.get(i);
+                    final int index = i;
                     ((ViewHolder1) holder).tvList.get(i).setText(cadrelist.get(i).getXm());
                     ((ViewHolder1) holder).tvList.get(i).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (!nm.equals("")) {
-                                String str = nm;
-                                Intent intent = new Intent(mContext, DetailView.class);
-                                //将获取到的干部对象传递给detailView
-                                intent.putExtra("intent_type", "single_cadre");
-                                intent.putExtra("cadre_object", tmpc);
-                                mContext.startActivity(intent);
+                            // 1. 在对比干部，此时的操作为 变色
+                            // 2、 读取干部个人信息
+                            if (COMPARE_SINGNAL_LEFT) {
+                                if (leftCadre != null) {
+                                    GradientDrawable gd = new GradientDrawable();//创建drawable
+                                    gd.setColor(mContext.getResources().getColor(R.color.item_color));
+                                    gd.setStroke(2, Color.parseColor("#292f3a"));
+                                    gd.setCornerRadius(5);
+                                    leftCadre.setBackgroundDrawable(gd);
+                                }
+                                GradientDrawable gd = new GradientDrawable();//创建drawable
+                                gd.setColor(Color.parseColor("#6a6da9"));
+                                gd.setStroke(2, Color.parseColor("#292f3a"));
+                                gd.setCornerRadius(5);
+                                leftCadre = ((ViewHolder1) holder).tvList.get(index);
+                                leftCadre.setBackgroundDrawable(gd);
+                                leftName = leftCadre.getText().toString();
+                                transferData.changeTextViewData(leftName, StringUtils.EMPTY_STRING);
+                                COMPARE_SINGNAL_LEFT = false;
+                            } else if (COMPARE_SINGNAL_RIGHT) {
+                                if (rightCadre != null) {
+                                    GradientDrawable gd = new GradientDrawable();//创建drawable
+                                    gd.setColor(mContext.getResources().getColor(R.color.item_color));
+                                    gd.setStroke(2, Color.parseColor("#292f3a"));
+                                    gd.setCornerRadius(5);
+                                    rightCadre.setBackgroundDrawable(gd);
+                                }
+                                GradientDrawable gd = new GradientDrawable();//创建drawable
+                                gd.setColor(Color.parseColor("#ffc20e"));
+                                gd.setStroke(2, Color.parseColor("#292f3a"));
+                                gd.setCornerRadius(5);
+                                rightCadre = ((ViewHolder1) holder).tvList.get(index);
+                                rightCadre.setBackgroundDrawable(gd);
+                                rightName = rightCadre.getText().toString();
+                                transferData.changeTextViewData(StringUtils.EMPTY_STRING, rightName);
+                                COMPARE_SINGNAL_RIGHT = false;
+                            } else {
+                                if (!nm.equals("")) {
+                                    String str = nm;
+                                    Intent intent = new Intent(mContext, DetailView.class);
+                                    //将获取到的干部对象传递给detailView
+                                    intent.putExtra("intent_type", "single_cadre");
+                                    intent.putExtra("cadre_object", tmpc);
+                                    mContext.startActivity(intent);
+                                }
                             }
                         }
                     });
 
                     GradientDrawable gd = new GradientDrawable();//创建drawable
-                    gd.setColor(Color.parseColor("#292f3a"));
                     gd.setStroke(2, Color.parseColor("#000000"));
                     gd.setCornerRadius(5);
+                    if (COMPARE_SINGNAL_LEFT && leftName.equals(cadrelist.get(i).getXm())) {
+                        gd.setColor(mContext.getResources().getColor(R.color.left_cadre_color));
+                    } else if (COMPARE_SINGNAL_RIGHT && rightName.equals(cadrelist.get(i).getXm())) {
+                        gd.setColor(mContext.getResources().getColor(R.color.right_cadre_color));
+                    } else {
+                        gd.setColor(Color.parseColor("#292f3a"));
+                    }
                     ((ViewHolder1) holder).tvList.get(i).setBackgroundDrawable(gd);
                     ((ViewHolder1) holder).tvList.get(i).setVisibility(View.VISIBLE);
                 }
@@ -181,19 +243,59 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             for (int i = 0; i < (cadrelist.size()); ++i) {
                 final String nm = cadrelist.get(i).getXm();
                 final Cadre tmpc = cadrelist.get(i);
+                final int index = i;
                 ((ViewHolder2) holder).tvList.get(i).setText(cadrelist.get(i).getXm());
                 ((ViewHolder2) holder).tvList.get(i).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!nm.equals("")) {
-                            String str = nm;
-                            Intent intent = new Intent(mContext, DetailView.class);
-                            //将获取到的干部对象传递给detailView
-                            intent.putExtra("intent_type", "single_cadre");
-                            intent.putExtra("cadre_object", tmpc);
-                            mContext.startActivity(intent);
+                        if (COMPARE_SINGNAL_LEFT) {
+                            if (leftCadre != null) {
+                                GradientDrawable gd = new GradientDrawable();//创建drawable
+                                gd.setColor(mContext.getResources().getColor(R.color.item_color));
+                                gd.setStroke(2, Color.parseColor("#292f3a"));
+                                gd.setCornerRadius(5);
+                                leftCadre.setBackgroundDrawable(gd);
+                            }
+                            GradientDrawable gd = new GradientDrawable();//创建drawable
+                            gd.setColor(mContext.getResources().getColor(R.color.left_cadre_color));
+                            gd.setStroke(2, Color.parseColor("#292f3a"));
+                            gd.setCornerRadius(5);
+                            leftCadre = ((ViewHolder1) holder).tvList.get(index);
+                            leftCadre.setBackgroundDrawable(gd);
+                            leftCadre.setBackgroundDrawable(gd);
+                            leftName = leftCadre.getText().toString();
+                            transferData.changeTextViewData(leftName, StringUtils.EMPTY_STRING);
+                            COMPARE_SINGNAL_LEFT = false;
+                        } else if (COMPARE_SINGNAL_RIGHT) {
+                            if (rightCadre != null) {
+                                GradientDrawable gd = new GradientDrawable();//创建drawable
+                                gd.setColor(mContext.getResources().getColor(R.color.item_color));
+                                gd.setStroke(2, Color.parseColor("#292f3a"));
+                                gd.setCornerRadius(5);
+                                rightCadre.setBackgroundDrawable(gd);
+                            }
+                            GradientDrawable gd = new GradientDrawable();//创建drawable
+                            gd.setColor(mContext.getResources().getColor(R.color.right_cadre_color));
+                            gd.setStroke(2, Color.parseColor("#292f3a"));
+                            gd.setCornerRadius(5);
+                            rightCadre = ((ViewHolder1) holder).tvList.get(index);
+                            rightCadre.setBackgroundDrawable(gd);
+                            rightCadre.setBackgroundDrawable(gd);
+                            rightName = rightCadre.getText().toString();
+                            transferData.changeTextViewData(StringUtils.EMPTY_STRING, rightName);
+                            COMPARE_SINGNAL_RIGHT = false;
+                        } else {
+                            if (!nm.equals("")) {
+                                String str = nm;
+                                Intent intent = new Intent(mContext, DetailView.class);
+                                //将获取到的干部对象传递给detailView
+                                intent.putExtra("intent_type", "single_cadre");
+                                intent.putExtra("cadre_object", tmpc);
+                                mContext.startActivity(intent);
+                            }
                         }
                     }
+
                 });
                 ((ViewHolder2) holder).tvList.get(i).setVisibility(View.VISIBLE);
             }
@@ -297,17 +399,4 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         return 1;
     }
-
-/*    public List<Cadre> reSortList(List<Cadre> cadres) {
-        List<Cadre> sortedList = new ArrayList<Cadre>();
-        sortedList.addAll(cadres);
-        // 从web导出的源数据并未修改，需求强行要求变更列的顺序。
-        sortedList.set(7, cadres.get(11));
-        sortedList.set(10, cadres.get(12));
-        sortedList.set(11, cadres.get(13));
-        sortedList.set(12, cadres.get(14));
-        sortedList.set(13, cadres.get(10));
-        sortedList.set(14, cadres.get(7));
-        return sortedList;
-    }*/
 }
