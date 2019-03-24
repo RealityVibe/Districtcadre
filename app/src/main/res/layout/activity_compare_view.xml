@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detail_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="105px"
+        android:background="@drawable/title_bar"
+        android:orientation="horizontal"
+        android:paddingBottom="3px">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="10px"
+            android:padding="8px"
+            android:src="@drawable/logo_white" />
+
+        <TextView
+            android:id="@+id/search_item"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/emty_shape"
+            android:gravity="center"
+            android:paddingLeft="20px"
+            android:singleLine="true"
+            android:text="数据对比"
+            android:textColor="#fff"
+            android:textSize="50px" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"></LinearLayout>
+
+        <TextView
+            android:id="@+id/back_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="20px"
+            android:background="@drawable/shape_radius"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="返回"
+            android:textColor="#000" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <!--左侧干部-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/cadre_left"
+                android:layout_width="300px"
+                android:layout_height="280px"
+                android:src="@drawable/cadre" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/left_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名：叶玲静 职务：妇联副主任"
+                    android:textColor="#fff"
+                    android:textSize="32px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/pk_200" />
+
+        <!--右侧干部-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingRight="10dp">
+
+
+            <ImageView
+                android:id="@+id/cadre_right"
+                android:layout_width="300px"
+                android:layout_height="280px"
+                android:layout_gravity="center"
+                android:src="@drawable/cadre_female" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/right_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名：叶玲静 职务：妇联副主任"
+                    android:textColor="#fff"
+                    android:textSize="32px" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/compare_recycler_view">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
