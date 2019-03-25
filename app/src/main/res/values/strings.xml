@@ -47,4 +47,21 @@
         <item>BackupFragment</item>
         <item>ResearcherFragment</item>
     </array>
+
+    <array name="colorList" tools:ignore="MissingDefaultResource">
+        <item>#5a9cd5</item>
+        <item>#fb6800</item>
+        <item>#9b9b9b</item>
+        <item>#ffb600</item>
+        <item>#2f66c3</item>
+        <item>#4da628</item>
+        <item>#01548a</item>
+        <item>#9e3900</item>
+        <item>#9e3900</item>
+        <item>#946800</item>
+        <item>#62a6dd</item>
+        <item>#fe883f</item>
+        <item>#ffc20e</item>
+        <item>#FF4081</item>
+    </array>
 </resources>

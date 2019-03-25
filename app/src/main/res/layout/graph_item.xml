@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="210dp"
+    android:layout_margin="2dp"
     android:background="@drawable/graph_shape"
-android:layout_margin="2dp"
-    android:padding="5dp">
+    android:orientation="horizontal">
     <!--柱状图-->
     <com.daivd.chart.core.PieChart
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="5dp" />
+        android:layout_margin="8dp" />
 </LinearLayout>

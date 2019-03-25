@@ -14,9 +14,22 @@
     <color name="left_cadre_color">#6a6da9</color>
     <color name="right_cadre_color">#ffc20e</color>
     <color name="graph_red">#f6855e</color>
-    <color name="graph_2">#9bddef</color>
-    <color name="graph_3">#d3cd4f</color>
-    <color name="graph_4">#cfad5c</color>
-    <color name="graph_5">#2273ad</color>
+    <color name="graph_1">#5a9cd5</color>
+    <color name="graph_2">#fb6800</color>
+    <color name="graph_3">#9e3900</color>
+    <color name="graph_4">#ffb600</color>
+    <color name="graph_5">#2f66c3</color>
+    <color name="graph_6">#4da628</color>
+    <color name="graph_7">#01548a</color>
+    <color name="graph_8">#9e3900</color>
+    <color name="graph_10">#9b9b9b</color>
+    <color name="graph_11">#946800</color>
+    <color name="graph_12">#62a6dd</color>
+    <color name="graph_13">#fe883f</color>
+    <color name="graph_14">#ffc20e</color>
+    <color name="graph_9">#FF4081</color>
+    <array name="color">
+
+    </array>
     // 大表选择RadioButton 未选择时的背景色
 </resources>

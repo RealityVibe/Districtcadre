@@ -3,6 +3,7 @@ package com.yze.manageonpad.districtcadre.core.subview;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,7 +36,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -76,7 +79,8 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
      */
     private final static int BOOK_VIEW = 1;
     private List<ChartData<PieData>> pieLists = new ArrayList<>();
-    private int[] colorIds;
+    //    @BindArray(R.array.colorList) String[] colorIds;
+    int[] colorIds;
     private int curViewType = 0;
     private RecyclerView.Adapter adapter;
     private float x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -102,8 +106,9 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
         //从intent获取上个Activity的数据
         getDataFromIntent(getIntent());
 
-        colorIds = new int[]{R.color.right_cadre_color, R.color.left_cadre_color, R.color.colorAccent, R.color.unChecked, R.color.colorPrimary, R.color.graph_2
-                , R.color.graph_3, R.color.graph_4, R.color.graph_5};
+        colorIds = new int[]{R.color.graph_1, R.color.graph_2, R.color.graph_3, R.color.graph_4,
+                R.color.graph_5, R.color.graph_6, R.color.graph_7, R.color.graph_8, R.color.graph_9,
+                R.color.graph_10, R.color.graph_11, R.color.graph_12, R.color.graph_13, R.color.graph_14};
         buildGraphData();
 
         // 初始化按钮
@@ -117,8 +122,14 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
         int maleCount = 0;
         int femaleCount = 0;
         Map<String, Integer> xlMap = new HashMap<String, Integer>();
+        Map<String, Integer> zgxlMap = new HashMap<String, Integer>();
+        Map<Integer, Integer> ageMap = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> rdsjMap = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> xzMap = new TreeMap<Integer, Integer>();
+        Map<Integer, Integer> gzMap = new TreeMap<Integer, Integer>();
+        Map<String, Integer> jgMap = new TreeMap<String, Integer>();
         for (Cadre cadre : cadreList) {
-
+            // 性别
             if (cadre.getXb().equals("男")) {
                 maleCount++;
             } else {
@@ -132,6 +143,54 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
                 xlMap.put(cadre.getQrzxw(), NumEnum.NUM_1.getValue());
             }
 
+            // 籍贯
+            String jg = cadre.getJg().length() > 4 ? cadre.getJg().substring(0, 4) : cadre.getJg();
+            if (jgMap.containsKey(cadre.getJg())) {
+                jgMap.put(jg, jgMap.get(jg) + 1);
+            } else {
+                jgMap.put(jg, NumEnum.NUM_1.getValue());
+            }
+
+            // 最高学历
+            if (zgxlMap.containsKey(cadre.getXw())) {
+                zgxlMap.put(cadre.getXw(), zgxlMap.get(cadre.getXw()) + 1);
+            } else {
+                zgxlMap.put(cadre.getXw(), NumEnum.NUM_1.getValue());
+            }
+
+            // 年龄分布
+            int age = (NumEnum.getAgeByBirth(cadre.getCsny()) + 4) / 5 * 5;
+            if (ageMap.containsKey(age)) {
+                ageMap.put(age, ageMap.get(age) + 1);
+            } else {
+                ageMap.put(age, 1);
+            }
+
+            // 入党时间分布
+            int rd = (NumEnum.getAgeByBirth(cadre.getRdsj()) + 4) / 5 * 5;
+            if (rdsjMap.containsKey(rd)) {
+                rdsjMap.put(rd, rdsjMap.get(rd) + 1);
+            } else {
+                rdsjMap.put(rd, 1);
+            }
+
+            // 任现职时间分布
+            int xz = (NumEnum.getAgeByBirth(cadre.getRxzsj()) + 4) / 5 * 5;
+            if (xzMap.containsKey(xz)) {
+                xzMap.put(xz, xzMap.get(xz) + 1);
+            } else {
+                xzMap.put(xz, 1);
+            }
+
+            // 参加工作时间分布
+            int gz = (NumEnum.getAgeByBirth(cadre.getCjgzsj()) + 4) / 5 * 5;
+            if (gzMap.containsKey(gz)) {
+                gzMap.put(gz, gzMap.get(gz) + 1);
+            } else {
+                gzMap.put(gz, 1);
+            }
+
+
         }
         List<PieData> xbList = new ArrayList<>();
         xbList.add(new PieData("男", "个", getResources().getColor(colorIds[0]), maleCount * 1.0));
@@ -142,22 +201,85 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
         ChartData<PieData> pieDatas = new ChartData<PieData>("性别分布", stringList, xbList);
         pieLists.add(pieDatas);
 
-        List<PieData> xlList = new ArrayList<>();
-        int index = 0;
-        for (Map.Entry<String, Integer> entry : xlMap.entrySet()) {
-            xlList.add(new PieData(entry.getKey(), "", getResources().getColor(colorIds[index++]), entry.getValue() * 1.0));
+
+        // 年龄
+        ChartData<PieData> agePieDatas = getPieDataChartDataDI(ageMap, "年龄分布（岁）");
+        pieLists.add(agePieDatas);
+
+        // 学历
+        ChartData<PieData> xlPieDatas = getPieDataChartData(xlMap, "学历分布（全日制）");
+        pieLists.add(xlPieDatas);
+
+        // 最高学历
+        ChartData<PieData> zgxlPieDatas = getPieDataChartData(zgxlMap, "最高学历分布");
+        pieLists.add(zgxlPieDatas);
+
+
+        // 入党时间
+        ChartData<PieData> rdPieDatas = getPieDataChartDataDI(rdsjMap, "入党时间（年）");
+        pieLists.add(rdPieDatas);
+
+        // 现职时间
+        ChartData<PieData> xzPieDatas = getPieDataChartDataDI(xzMap, "任现职时间（年）");
+        pieLists.add(xzPieDatas);
+
+        // 参加工作时间
+        ChartData<PieData> gzPieDatas = getPieDataChartDataDI(gzMap, "参加工作年限（年）");
+        pieLists.add(gzPieDatas);
+
+        // 籍贯
+        ChartData<PieData> jgPieDatas = getPieDataChartData(jgMap, "籍贯");
+        pieLists.add(jgPieDatas);
+
+    }
+
+    /**
+     * 根据已有的map构造pieChartData
+     *
+     * @param dataMap Integer类型,Integer类型
+     * @return
+     */
+    @NonNull
+    private ChartData<PieData> getPieDataChartDataDI(Map<Integer, Integer> dataMap, String chartName) {
+        List<PieData> dataList = new ArrayList<>();
+        ChartData<PieData> xzPieDatas;
+        int iCount = 0;
+        for (Map.Entry<Integer, Integer> entry : dataMap.entrySet()) {
+            if (entry.getKey() == 0) {
+                dataList.add(new PieData("其它", "", getResources().getColor(colorIds[iCount++]), entry.getValue() * 1.0));
+            } else if (entry.getValue() != 0) {
+                dataList.add(new PieData(entry.getKey() - 5 + "~" + entry.getKey(), "", getResources().getColor(colorIds[iCount++]), entry.getValue() * 1.0));
+            }
         }
-        List<String> sList2 = new ArrayList<String>();
-        for (int i = 0; i < index; ++i) {
-            sList2.add("男" + i);
+        List<String> sList = new ArrayList<String>();
+        for (int i = 0; i < iCount; ++i) {
+            sList.add("男" + i);
         }
-        ChartData<PieData> pie2Datas = new ChartData<PieData>("学历分布", sList2, xlList);
-        pieLists.add(pie2Datas);
-        pieLists.add(pie2Datas);
-        pieLists.add(pie2Datas);
-        pieLists.add(pie2Datas);
-        pieLists.add(pie2Datas);
-        pieLists.add(pie2Datas);
+        xzPieDatas = new ChartData<PieData>(chartName, sList, dataList);
+        return xzPieDatas;
+    }
+
+    /**
+     * 根据已有的map构造pieChartData
+     *
+     * @param dataMap   String,Integer类型
+     * @param chartName
+     * @return
+     */
+    @NonNull
+    private ChartData<PieData> getPieDataChartData(Map<String, Integer> dataMap, String chartName) {
+        List<PieData> zgxlList = new ArrayList<>();
+        ChartData<PieData> zgxlPieDatas;
+        int iCount = 0;
+        for (Map.Entry<String, Integer> entry : dataMap.entrySet()) {
+            zgxlList.add(new PieData(entry.getKey(), "", getResources().getColor(colorIds[iCount++]), entry.getValue() * 1.0));
+        }
+        List<String> sList = new ArrayList<String>();
+        for (int i = 0; i < iCount; ++i) {
+            sList.add("s" + i);
+        }
+        zgxlPieDatas = new ChartData<PieData>(chartName, sList, zgxlList);
+        return zgxlPieDatas;
     }
 
     /**
@@ -187,7 +309,7 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
             resultTitle.setVisibility(View.GONE);
             GraphAdapter graphAdapter = new GraphAdapter(R.layout.graph_item, pieLists);
             graphAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
-            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(NumEnum.NUM_3.getValue(), StaggeredGridLayoutManager.VERTICAL);
+            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(NumEnum.NUM_2.getValue(), StaggeredGridLayoutManager.VERTICAL);
             resultView.setLayoutManager(layoutManager);
             resultView.setAdapter(graphAdapter);
             adapter = graphAdapter;

@@ -53,10 +53,11 @@
 
         <TextView
             android:id="@+id/change_button"
-            android:layout_width="200px"
+            android:layout_width="240px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50px"
             android:background="@drawable/shape_cadre_title"
+            android:drawableLeft="@drawable/change_icon"
             android:gravity="center"
             android:padding="2dp"
             android:text="切换视图"
@@ -82,6 +83,7 @@
             android:layout_marginLeft="30px"
             android:layout_marginRight="20px"
             android:background="@drawable/shape_radius"
+            android:drawableLeft="@drawable/back_icon"
             android:gravity="center"
             android:padding="2dp"
             android:text="返回"

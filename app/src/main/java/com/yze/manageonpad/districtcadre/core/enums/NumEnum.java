@@ -302,9 +302,9 @@ public enum NumEnum {
                 age = now.get(Calendar.YEAR) - Integer.valueOf(birthdays[0]);
                 if (now.get(Calendar.MONTH) < Integer.valueOf(birthdays[1])) {
                     age -= 1;
-                } else if(now.get(Calendar.MONTH) == Integer.valueOf(birthdays[1]) && now.get(Calendar.DAY_OF_MONTH) < Integer.valueOf(birthdays[2])){
+                } /*else if(now.get(Calendar.MONTH) == Integer.valueOf(birthdays[1]) && now.get(Calendar.DAY_OF_MONTH) < Integer.valueOf(birthdays[2])){
                     age -= 1;
-                }
+                }*/
             }
             return age;
         } catch (Exception e) {//兼容性更强,异常后返回数据
