@@ -107,22 +107,8 @@
 
             </RadioGroup>
 
-<!--            <TextView
-                android:id="@+id/compare_button"
-                android:layout_width="240px"
-                android:layout_height="60px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/shape_radius"
-                android:drawableLeft="@drawable/pk_48"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textSize="32px"
-                android:text="干部对比" />-->
-
             <LinearLayout
-                android:layout_width="320px"
+                android:layout_width="330px"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content">
@@ -137,7 +123,7 @@
                     android:paddingRight="5dp"
                     android:textSize="32px"
                     android:textColor="#ffffff"
-                    android:text="" />
+                    android:text="+" />
                 <ImageView
                     android:id="@+id/compare_button"
                     android:layout_width="wrap_content"
@@ -154,7 +140,7 @@
                     android:paddingRight="5dp"
                     android:textSize="32px"
                     android:textColor="#ffffff"
-                    android:text="" />
+                    android:text="+" />
             </LinearLayout>
 
             <LinearLayout

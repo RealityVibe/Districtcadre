@@ -16,12 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.daivd.chart.component.ChartTitle;
-import com.daivd.chart.component.base.ILegend;
-import com.daivd.chart.core.PieChart;
 import com.daivd.chart.data.ChartData;
 import com.daivd.chart.data.PieData;
-import com.daivd.chart.data.ScaleData;
 import com.yze.manageonpad.districtcadre.R;
 import com.yze.manageonpad.districtcadre.core.adapter.CardAdapter;
 import com.yze.manageonpad.districtcadre.core.adapter.GraphAdapter;
@@ -38,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -145,7 +140,7 @@ public class DetailView extends AppCompatActivity implements View.OnClickListene
 
             // 籍贯
             String jg = cadre.getJg().length() > 4 ? cadre.getJg().substring(0, 4) : cadre.getJg();
-            if (jgMap.containsKey(cadre.getJg())) {
+            if (jgMap.containsKey(jg)) {
                 jgMap.put(jg, jgMap.get(jg) + 1);
             } else {
                 jgMap.put(jg, NumEnum.NUM_1.getValue());
