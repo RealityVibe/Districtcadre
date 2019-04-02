@@ -4,7 +4,9 @@
     <string name="direct">区级机关</string>
     <string name="back">后备干部</string>
     <string name="researcher">调研员</string>
+    <string name="serverUrl">http://192.168.1.7:8080/cadreServer/</string>
     <string name="mainTitleName">区管干部基本情况</string>
+    <string name="gesture_password">123</string>
     <!--文件路径-->
     <string name="filePath">Android/docs</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -47,6 +49,7 @@
         <item>BackupFragment</item>
         <item>ResearcherFragment</item>
     </array>
+
 
     <array name="colorList" tools:ignore="MissingDefaultResource">
         <item>#5a9cd5</item>

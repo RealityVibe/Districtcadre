@@ -20,11 +20,6 @@ public class Tab {
         this.fragment = fragment;
     }
 
-    /*    public void Tab(int image, String text, Class fragment){
-            this.image = image;
-            this.text = text;
-            this.fragment = fragment;
-        }*/
     public int getImage() {
         return image;
     }

@@ -7,38 +7,42 @@
     android:background="#1d4c7b"
     android:gravity="center"
     android:orientation="vertical">
-    <!-- <LinearLayout
-         android:id="@+id/gesture_ll"
-         android:layout_width="match_parent"
-         android:orientation="vertical"
-         android:layout_height="match_parent">
-         <TextView
-             android:id="@+id/tv_state"
-             android:gravity="center"
-             android:textColor="#ffffff"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="请输入手势密码"
-             android:textSize="26sp"/>
-         <CheckBox
-             android:id="@+id/reset_rb"
-             android:layout_gravity="center"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="#ffffff"
-             android:textSize="16sp"
-             android:text="修改密码"/>
- &lt;!&ndash;        <com.syd.oden.gesturelock.view.GestureLockViewGroup
-             android:id="@+id/gesturelock"
-             android:layout_gravity="center"
-             android:layout_width="wrap_content"
-             android:layout_height="match_parent"
-             app:color_finger_on="#00aded"
-             app:color_no_finger="#f8f8f8"
-             app:preference_id="1"
-             android:layout_marginTop="30dp"
-             app:count="4" />&ndash;&gt;
-     </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/gesture_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="请输入手势密码"
+            android:textColor="#ffffff"
+            android:textSize="26sp" />
+
+        <CheckBox
+            android:id="@+id/reset_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="修改密码"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/patter_lock_view"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            app:aspectRatio="square"
+            app:aspectRatioEnabled="true"
+            app:dotAnimationDuration="150"
+            app:dotCount="3"/>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -133,13 +137,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <!--<com.example.yyyyz.systonpad.LoadButton
-                    android:id="@+id/welcome_direct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70px"
-                    android:layout_marginRight="100px"
-                    android:text="区级干部"
-                    android:textSize="18dp" />-->
                 <Button
                     android:id="@+id/welcome_direct"
                     android:layout_width="wrap_content"

@@ -66,11 +66,6 @@ public class Cadre extends DataSupport implements Serializable {
         this.scsfhb = scsfhb;
     }
 
-/*    public Cadre(String bh, String xm, String xb, String csny, String cjgzsj,
-                 String xl, String dp, String sf, String xrzw, String cjrs, String dps, String dpl, String scsfhb){
-
-    }*/
-
     /*
      * 镇街/区级干部
      * */
@@ -80,11 +75,8 @@ public class Cadre extends DataSupport implements Serializable {
         this.xrzw = xrzw;
         this.xb = xb;
         this.csny = csny;
-        this.jg = jg.replace("-", "");/*
-        this.xl = xl.replaceAll("，","");
-        this.xl = this.xl.replaceAll("，","");*/
+        this.jg = jg.replace("-", "");
         this.xl = xl.replaceAll(",|，|、", " ");
-//        this.xl = xl.replace('、', ' ');
         this.xw = xw;
         this.cjgzsj = cjgzsj;
         this.rdsj = rdsj;

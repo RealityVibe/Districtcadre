@@ -40,7 +40,6 @@
                 android:text="@string/mainTitleName"
                 android:textColor="#fff"
                 android:textSize="50px" />
-
             <RadioGroup
                 android:id="@+id/type_group"
                 android:layout_width="wrap_content"
@@ -109,9 +108,10 @@
 
             <LinearLayout
                 android:layout_width="330px"
-                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_marginLeft="20dp">
+
                 <TextView
                     android:id="@+id/compare_left_name"
                     android:layout_width="140px"
@@ -121,14 +121,16 @@
                     android:gravity="center"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:textSize="32px"
+                    android:text="+"
                     android:textColor="#ffffff"
-                    android:text="+" />
+                    android:textSize="32px" />
+
                 <ImageView
                     android:id="@+id/compare_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/pk_48"/>
+                    android:src="@drawable/pk_48" />
+
                 <TextView
                     android:id="@+id/compare_right_name"
                     android:layout_width="140px"
@@ -138,9 +140,9 @@
                     android:gravity="center"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:textSize="32px"
+                    android:text="+"
                     android:textColor="#ffffff"
-                    android:text="+" />
+                    android:textSize="32px" />
             </LinearLayout>
 
             <LinearLayout

@@ -96,7 +96,7 @@ public class ResearcherFragment extends Fragment {
         apartments.addAll(param.getDaNameList());
         apartments.remove(0);
         try {
-            cadreList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "invest");
+            cadreList = JSONUtils.getResearcherList("sourcedata.json", getActivity(), "invests");
             fullList.addAll(cadreList);
         } catch (Exception e) {
             Toast.makeText(getContext(), "调研员数据缺失", Toast.LENGTH_SHORT).show();

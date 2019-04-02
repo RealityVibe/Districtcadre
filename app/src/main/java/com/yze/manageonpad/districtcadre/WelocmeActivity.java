@@ -2,27 +2,30 @@ package com.yze.manageonpad.districtcadre;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.andrognito.patternlockview.utils.ResourceUtils;
 import com.yze.manageonpad.districtcadre.model.ActivityManager;
-import com.yze.manageonpad.districtcadre.model.Apartment;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,18 +40,32 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
     Button backupBtn;
     @BindView(R.id.welcome_researcher)
     Button investBtn;
-    /*    @BindView(R.id.welcome_bdg) private ImageView imgView;*/
-    @BindView(R.id.welcome_ll) LinearLayout welcome_ll;
-//    @BindView(R.id.gesture_ll) private LinearLayout gesture_ll;
- /*   @BindView(R.id.tv_state) private TextView tv_state;
-    @BindView(R.id.reset_rb) private CheckBox reset_rb;*/
+    @BindView(R.id.welcome_ll)
+    LinearLayout welcome_ll;
+    @BindView(R.id.gesture_ll)
+    LinearLayout gesture_ll;
+    @BindView(R.id.reset_rb)
+    CheckBox reset_rb;
     private long exitTime = 0;
     private static Dialog dialog;
     //    private GestureLockViewGroup mGestureLockViewGroup;
+    String mLocalKey;
+
+    @BindView(R.id.patter_lock_view)
+    PatternLockView mPatternLockView;
+
+    @BindView(R.id.tv_state)
+    TextView mTVTips;
+
+    private String mCreatePattern;
+
+    private int mCheckTimes = 3;
     private boolean resetPswd = false;//是否修改密码
+    private boolean correctPswd = false;//是否成功输入密码
     private final static int FAULT_PASSWORD_PAUSE = 1;
     public static ActivityManager activityManager = new ActivityManager();
 /*    private Handler handler = new Handler() {
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case FAULT_PASSWORD_PAUSE:
@@ -76,9 +93,8 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         directBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
         investBtn.setOnClickListener(this);
-//        gesture_ll.setVisibility(View.GONE);
-        welcome_ll.setVisibility(View.VISIBLE);
-//        initGesture();
+        welcome_ll.setVisibility(View.GONE);
+        initGesture();
     }
 
     //横屏锁定
@@ -151,108 +167,157 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         }
         return super.onKeyDown(keyCode, event);
     }
-/*
+
 
     private void initGesture() {
-        mGestureLockViewGroup = (GestureLockViewGroup) findViewById(R.id.gesturelock);
-        gestureEventListener();
-        gesturePasswordSettingListener();
-        gestureRetryLimitListener();
+        SharedPreferences read = getSharedPreferences("lock", MODE_PRIVATE);
+        //步骤2：获取文件中的值
+        mLocalKey = read.getString("gesture_password", "");
+        mPatternLockView = (PatternLockView) findViewById(R.id.patter_lock_view);
+        mPatternLockView.setDotCount(3);
+        mPatternLockView.setDotNormalSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_size));
+        mPatternLockView.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_selected_size));
+        mPatternLockView.setPathWidth((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_path_width));
+        mPatternLockView.setAspectRatioEnabled(true);
+        mPatternLockView.setAspectRatio(PatternLockView.AspectRatio.ASPECT_RATIO_HEIGHT_BIAS);
+        mPatternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
+        mPatternLockView.setDotAnimationDuration(150);
+        mPatternLockView.setPathEndAnimationDuration(100);
+        mPatternLockView.setCorrectStateColor(ResourceUtils.getColor(this, R.color.white));
+        mPatternLockView.setInStealthMode(false);
+        mPatternLockView.setTactileFeedbackEnabled(true);
+        mPatternLockView.setInputEnabled(true);
+        mPatternLockView.addPatternLockListener(mPatternLockViewListener);
+        mPatternLockView.setEnableHapticFeedback(false);
     }
 
-    //手势密码设置
-    private void gesturePasswordSettingListener() {
-        mGestureLockViewGroup.setGesturePasswordSettingListener(new GesturePasswordSettingListener() {
-            @Override
-            public boolean onFirstInputComplete(int len) {
-                if (len > 3) {
-                    tv_state.setTextColor(Color.WHITE);
-                    tv_state.setText("再次绘制手势密码");
-                    return true;
-                } else {
-                    tv_state.setTextColor(Color.RED);
-                    tv_state.setText("最少连接4个点，请重新输入!");
-                    return false;
-                }
-            }
 
-            @Override
-            public void onSuccess() {
-                tv_state.setTextColor(Color.WHITE);
-                Toast.makeText(WelocmeActivity.this, "密码设置成功!", Toast.LENGTH_SHORT).show();
-
-                tv_state.setText("请输入手势密码解锁!");
-            }
-
-            @Override
-            public void onFail() {
-                tv_state.setTextColor(Color.RED);
-                tv_state.setText("与上一次绘制不一致，请重新绘制");
-            }
-        });
-    }
-
-    //设置手势密码监听事件
-    private void gestureEventListener() {
-        mGestureLockViewGroup.setGestureEventListener(new GestureEventListener() {
-            @Override
-            public void onGestureEvent(boolean matched) {
-                if (reset_rb.isChecked())
-                    resetPswd = true;
-//                mylog.d("onGestureEvent matched: " + matched);
-                if (!matched) {
-                    tv_state.setTextColor(Color.parseColor("#ff0000"));
-                    tv_state.setText("手势密码错误");
-                    mGestureLockViewGroup.resetView();
-
-                } else {
-                    tv_state.setTextColor(Color.WHITE);
-                    tv_state.setText("手势密码正确");
-                    mGestureLockViewGroup.resetView();
-                }
-                if (resetPswd) {
-                    mGestureLockViewGroup.removePassword();
-                    resetPswd = false;
-                    reset_rb.setChecked(false);
-                    initGesture();
-                } else {
-                    gesture_ll.setVisibility(View.GONE);
-                    welcome_ll.setVisibility(View.VISIBLE);
-                }
-
-            }
-    });
-}
-
-    //重试次数超过限制
-    private void gestureRetryLimitListener() {
-        mGestureLockViewGroup.setGestureUnmatchedExceedListener(5, new GestureUnmatchedExceedListener() {
-            @Override
-            public void onUnmatchedExceedBoundary() {
-                tv_state.setTextColor(Color.parseColor("#ff0000"));
-                tv_state.setText("错误次数过多，请稍后再试!");
-
-//                mGestureLockViewGroup.setRetryTimes(5);
-                new resetTvThread().start();
-            }
-        });
-    }
-
-class resetTvThread extends Thread {
-    @Override
-    public void run() {
-        try {
-            sleep(5000);
-            Message message = handler.obtainMessage(FAULT_PASSWORD_PAUSE);
-            handler.sendMessage(message);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
+        @Override
+        public void onStarted() {
+            Log.d(getClass().getName(), "Pattern drawing started");
+            mTVTips.setText("完成后请抬起手指");
         }
 
+        @Override
+        public void onProgress(List<PatternLockView.Dot> progressPattern) {
+            Log.d(getClass().getName(), "Pattern progress: " +
+                    PatternLockUtils.patternToString(mPatternLockView, progressPattern));
+        }
+
+        @Override
+        public void onComplete(List<PatternLockView.Dot> pattern) {
+            Log.d(getClass().getName(), "Pattern complete: " +
+                    PatternLockUtils.patternToString(mPatternLockView, pattern));
+            if (reset_rb.isChecked()) {
+                resetPswd = true;
+            }
+            if (correctPswd) {
+                createPattern(pattern);
+            } else if (checkPattern(pattern)) {
+                if (!resetPswd) {
+                    gesture_ll.setVisibility(View.GONE);
+                    welcome_ll.setVisibility(View.VISIBLE);
+                } else {
+                    correctPswd = true;
+                    mTVTips.setText("请绘制新的解锁手势");
+                }
+            }
+
+        }
+
+        @Override
+        public void onCleared() {
+            Log.d(getClass().getName(), "Pattern has been cleared");
+        }
+    };
+
+    private boolean checkPattern(List<PatternLockView.Dot> pattern) {
+        String patternStr = PatternLockUtils.patternToString(mPatternLockView, pattern);
+
+        mCheckTimes--;
+
+        if (mCheckTimes == 0) {
+            Toast.makeText(this, "请重新登录", Toast.LENGTH_SHORT).show();
+            finish();
+            return false;
+        }
+
+        if (patternStr.equals(mLocalKey)) {
+            mTVTips.setText("输入正确");
+            return true;
+        } else {
+            mTVTips.setText("你还有" + mCheckTimes + "次机会");
+            mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+            mPatternLockView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPatternLockView.clearPattern();
+                }
+            }, 1500);
+        }
+        return false;
     }
 
-}
-*/
+    private void createPattern(List<PatternLockView.Dot> pattern) {
+        if (pattern.size() < 4) {
+            mTVTips.setText("至少需要4个点，请重试");
+            mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+            mPatternLockView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPatternLockView.clearPattern();
+                    mTVTips.setText("请绘制新的解锁手势");
+                }
+            }, 1500);
+            return;
+        }
+
+        String patternStr = PatternLockUtils.patternToString(mPatternLockView, pattern);
+
+        if (TextUtils.isEmpty(mCreatePattern)) {
+            mCreatePattern = patternStr;
+            boolean[][] selected = new boolean[3][3];
+            for (PatternLockView.Dot dot : pattern) {
+                selected[dot.getRow()][dot.getColumn()] = true;
+            }
+//            mPatternPreview.setSelectedDots(selected);
+            mPatternLockView.clearPattern();
+            mTVTips.setText("重绘手势以确认");
+        } else {
+            if (patternStr.equals(mCreatePattern)) {
+//                SPUtils.savePattern(getApplicationContext(), patternStr);
+                mTVTips.setText("设置手势成功");
+                SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_PRIVATE).edit();
+                //步骤2-2：将获取过来的值放入文件
+                editor.putString("gesture_password", mCreatePattern);
+                //步骤3：提交
+                editor.commit();
+                mPatternLockView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 800);
+            } else {
+                mCreatePattern = "";
+                mTVTips.setText("两次图案不一致，请重新绘制");
+                mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+
+                mPatternLockView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPatternLockView.clearPattern();
+//                        mPatternPreview.clearPattern();
+                        mTVTips.setText("请绘制新的解锁手势");
+                    }
+                }, 1500);
+
+
+            }
+        }
+    }
+
 
     //在onCreate方法外面定义静态方法
     public static void closeProgressDialog() {

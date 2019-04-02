@@ -61,11 +61,11 @@ public class JSONUtils {
                             String tmp_xb = transformNullString(tmpobject.get("xb"));
                             String tmp_csny = transformNullString(tmpobject.get("csny"));
                             String tmp_jg = transformNullString(tmpobject.get("jg"));
-                            String tmp_xl = transformNullString(tmpobject.get("xl"));
+                            String tmp_xl = transformNullString(tmpobject.get("qrzjy"));
                             String tmp_xw = "";
-                            tmp_xw = transformNullString(tmpobject.get("xlzc"));
+                            tmp_xw = transformNullString(tmpobject.get("zzxl"));
                             String tmp_qrzxw = "";
-                            tmp_qrzxw = transformNullString(tmpobject.get("qrzjy"));
+                            tmp_qrzxw = transformNullString(tmpobject.get("qrzxl"));
                             String tmp_cjgzsj = transformNullString(tmpobject.get("cjgzsj"));
                             String tmp_rdsj = null;
                             if (!transformNullString(tmpobject.get("zzmm")).equals("中共党员") && !transformNullString(tmpobject.get("zzmm")).equals(""))
@@ -75,7 +75,7 @@ public class JSONUtils {
                             }
                             String tmp_rxzsj = transformNullString(tmpobject.get("rxzsj"));
                             String tmp_fg = transformNullString(tmpobject.get("fg"));
-                            String tmp_bz = transformNullString(tmpobject.get("bz"));
+                            String tmp_bz ="";
                             tmp_cadre = new Cadre(tmp_xm, tmp_bmbh, tmp_xrzw, tmp_xb, tmp_csny, tmp_jg,
                                     tmp_xl, tmp_xw, tmp_qrzxw, tmp_cjgzsj, tmp_rdsj, tmp_rxzsj, tmp_fg, tmp_bz);
                         } else {
@@ -117,11 +117,11 @@ public class JSONUtils {
                         String tmp_xb = transformNullString(tmpobject.get("xb"));
                         String tmp_csny = transformNullString(tmpobject.get("csny"));
                         String tmp_jg = transformNullString(tmpobject.get("jg"));
-                        String tmp_xl = transformNullString(tmpobject.get("xl"));
+                        String tmp_xl = transformNullString(tmpobject.get("qrzjy"));
                         String tmp_xw = "";
-                        tmp_xw = transformNullString(tmpobject.get("xlzc"));
+                        tmp_xw = transformNullString(tmpobject.get("zzxl"));
                         String tmp_qrzxw = "";
-                        tmp_qrzxw = transformNullString(tmpobject.get("qrzjy"));
+                        tmp_qrzxw = transformNullString(tmpobject.get("qrzxl"));
                         String tmp_cjgzsj = transformNullString(tmpobject.get("cjgzsj"));
                         String tmp_rdsj = null;
                         if (!transformNullString(tmpobject.get("zzmm")).equals("中共党员") && !transformNullString(tmpobject.get("zzmm")).equals(""))
@@ -131,7 +131,7 @@ public class JSONUtils {
                         }
                         String tmp_rxzsj = transformNullString(tmpobject.get("rxzsj"));
                         String tmp_fg = transformNullString(tmpobject.get("fg"));
-                        String tmp_bz = transformNullString(tmpobject.get("bz"));
+                        String tmp_bz = "";
                         tmp_cadre = new Cadre(tmp_xm, tmp_bmbh, tmp_xrzw, tmp_xb, tmp_csny, tmp_jg,
                                 tmp_xl, tmp_xw, tmp_qrzxw, tmp_cjgzsj, tmp_rdsj, tmp_rxzsj, tmp_fg, tmp_bz);
                     } else {
@@ -163,7 +163,7 @@ public class JSONUtils {
                     if (!tb.getString("scsfhbgb").equals("null"))
                         scsf = tb.getString("scsfhbgb");
                 cadreList.add(new Cadre(tb.getInt("ID"), tb.getString("xm"), tb.getString("xb")
-                        , tb.getString("csny"), tb.getString("cjgzsj"), tb.getString("xl"), tb.getString("dp")
+                        , tb.getString("csny"), tb.getString("cjgzsj"), tb.getString("qrzjy"), tb.getString("dp")
                         , tb.getString("sf"), tb.getString("xgzdwjzw"), tb.getString("cjtjrs")
                         , tb.getString("dps"), tb.getString("dpl"), scsf));
             }
@@ -211,8 +211,8 @@ public class JSONUtils {
             JSONObject object = new JSONObject(text);
             JSONArray array = object.getJSONArray(type);
             for (int i = 0; i < array.length(); ++i) {
-                JSONArray persons = array.getJSONObject(i).getJSONArray("person");
-                String bmnm = array.getJSONObject(i).getString("BM_NAME");
+                JSONArray persons = array.getJSONObject(i).getJSONArray("persons");
+                String bmnm = array.getJSONObject(i).getString("BmName");
                 StringBuffer personSB = new StringBuffer();
                 personSB.append(bmnm);
                 for (int j = 0; j < persons.length(); ++j) {
@@ -240,7 +240,7 @@ public class JSONUtils {
                /* Gson gson = new Gson();
                 apartmentList = gson */
             JSONObject object = new JSONObject(text);
-            JSONArray array = object.getJSONArray("apartment");
+            JSONArray array = object.getJSONArray("apartments");
             for (int i = 0; i < array.length(); ++i) {
                 JSONObject tmpobject = array.getJSONObject(i);
                 if (tmpobject.get("bmlx").equals(bmlx)) {

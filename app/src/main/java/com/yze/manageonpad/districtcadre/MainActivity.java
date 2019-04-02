@@ -20,12 +20,18 @@ import com.yze.manageonpad.districtcadre.model.CadresParams;
 import com.yze.manageonpad.districtcadre.utils.JSONUtils;
 import com.yze.manageonpad.districtcadre.utils.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -105,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static ProgressDialog progressDialog;
     private Bundle bundle = new Bundle();
     private Fragment mContent;//当前的fragment
-    //    private String[] textStrings = new String[]{"CountyFragment", "DirectFragment", "BackupFragment", "ResearcherFragment"};
 
     @BindArray(R.array.fragmentList)
     String[] fragmentNames;
@@ -222,11 +227,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
+        // 异步加载数据
+//        getDataAsync();
         //  搜索按钮
         initButton();
         progressDialogTip();
     }
+
+/*
+    private void getDataAsync() {
+        String url = getResources().getString(R.string.serverUrl) + "apartment/getAll";
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+        final Call call = okHttpClient.newCall(request);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = call.execute();
+                    String s = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+*/
 
     //监听输入法事件
     private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
@@ -268,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 读取json文件，构建大表数据
+     *
      * @throws Exception
      */
     private void buildDataCollections() throws Exception {
@@ -338,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CompareView.class);
-                if(leftName == null || rightName ==null){
+                if (leftName == null || rightName == null) {
                     Toast.makeText(getBaseContext(), "请选择要比较的干部", Toast.LENGTH_SHORT).show();
                 } else {
                     // 尚未做重名处理
@@ -619,10 +649,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void changeTextViewData(String leftName, String rightName) {
-        if(!StringUtils.isNullOrEmpty(leftName)){
+        if (!StringUtils.isNullOrEmpty(leftName)) {
             compareLeftName.setText(leftName);
         }
-        if(!StringUtils.isNullOrEmpty(rightName)) {
+        if (!StringUtils.isNullOrEmpty(rightName)) {
             compareRightName.setText(rightName);
         }
     }

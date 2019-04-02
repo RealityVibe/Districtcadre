@@ -78,7 +78,7 @@ public class CadreUtils {
         List<Cadre> cadreList = new ArrayList<Cadre>();
 
         for (Map.Entry<String, Cadre> entry : cadreMap.entrySet()) {
-            if(entry.getKey().contains(name)){
+            if (entry.getKey().contains(name)) {
                 cadreList.add(entry.getValue());
             }
         }

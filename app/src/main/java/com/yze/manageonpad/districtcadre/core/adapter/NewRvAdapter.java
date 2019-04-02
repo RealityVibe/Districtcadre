@@ -49,8 +49,6 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private TextView leftCadre;
     private TextView rightCadre;
     private String num;
-    public static final int LEFT = 0;
-    public static final int RIGHT = 1;
     public ITransferData transferData;
 
     public NewRvAdapter(Context context, CadresParams params, CadreType type, ITransferData transferData) {
