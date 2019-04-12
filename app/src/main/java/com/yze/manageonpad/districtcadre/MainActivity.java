@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 关闭进度条
      * */
     private static final int PROGRESS_END = 6;
+
+    /**
+     * 更新数据成功
+     */
+    private static final int UPDATE_DATA_SUCCESS = 7;
+
+    /**
+     * 更新数据失败
+     */
+    private static final int UPDATE_DATA_FAIL = 8;
     public List<Apartment> apartmentsList = new ArrayList<Apartment>();
     public int loadApartNum = 0;
     public Map<String, Cadre> cadresMap = new HashMap<String, Cadre>();
@@ -129,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.compare_right_name)
     TextView compareRightName;
+
+    @BindView(R.id.update_button)
+    TextView updateButton;
     /**
      * activity管理器
      */
@@ -192,6 +205,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case PROGRESS_END:
                     progressDialog.dismiss();
                     break;
+                case UPDATE_DATA_SUCCESS:
+                    Toast.makeText(MainActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
+                    break;
+                case UPDATE_DATA_FAIL:
+                    Toast.makeText(MainActivity.this, "更新失败，请检查网络", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -234,9 +253,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialogTip();
     }
 
-/*
-    private void getDataAsync() {
-        String url = getResources().getString(R.string.serverUrl) + "apartment/getAll";
+
+    /**
+     * 更新源数据
+     */
+    private void updateDataAsync() {
+        String url = getResources().getString(R.string.serverUrl) + "cadre/generateJSONFile";
         OkHttpClient okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(url)
@@ -248,14 +270,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 try {
                     Response response = call.execute();
-                    String s = response.body().string();
+                    String jsonData = response.body().string();
+                    JSONUtils.updateDataResource(jsonData, getBaseContext());
+                    Message message = mHandler.obtainMessage(UPDATE_DATA_SUCCESS);
+                    mHandler.sendMessage(message);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Message message = mHandler.obtainMessage(UPDATE_DATA_FAIL);
+                    mHandler.sendMessage(message);
                 }
             }
         }).start();
+
     }
-*/
 
     //监听输入法事件
     private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
@@ -393,6 +419,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        updateButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                updateDataAsync();
+            }
+        });
     }
 
     @Override

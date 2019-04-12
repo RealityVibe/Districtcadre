@@ -8,9 +8,9 @@ import org.litepal.crud.DataSupport;
  * 2019/2/27.
  */
 public class Apartment extends DataSupport {
-    private int bmbh;
-    private String bmmz;
-    private String bmlx;
+    private int bmbh; // 部门编号
+    private String bmmz; // 部门名字
+    private String bmlx; // 部门类型
 
     public Apartment(int bmbh, String bmmz, String bmlx) {
         this.bmbh = bmbh;

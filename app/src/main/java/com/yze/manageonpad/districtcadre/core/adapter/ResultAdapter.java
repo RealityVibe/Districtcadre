@@ -148,10 +148,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             holder.xrzwText.setText(cadre.getXrzw());
         } else
             holder.xrzwText.setText("");
-        if (cadre.getCsny() != null && (!cadre.getCsny().equals("null")))
-            holder.csnyText.setText(cadre.getCsny().substring(0, 7));
-        else
-            holder.csnyText.setText("");
         if (cadre.getJg() != null && (!cadre.getJg().equals("null")))
             holder.jgText.setText(cadre.getJg());
         else
@@ -169,20 +165,11 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         } else {
             holder.qrzxwText.setText("");
         }
-        if (cadre.getCjgzsj() != null && (!cadre.getCjgzsj().equals("null")))
-            holder.gzsjText.setText(cadre.getCjgzsj().substring(0, 7));
-        if (cadre.getRdsj() != null && (!cadre.getRdsj().equals("null"))) {
-            if (cadre.getRdsj().length() > 7)
-                holder.rdsjText.setText(cadre.getRdsj().substring(0, 7));
-            else
-                holder.rdsjText.setText(cadre.getRdsj());
-        } else
-            holder.rdsjText.setText("");
+        holder.gzsjText.setText(handlerDateStr(cadre.getCjgzsj()));
+        holder.rdsjText.setText(handlerDateStr(cadre.getRdsj()));
+        holder.xzsjText.setText(handlerDateStr(cadre.getRxzsj()));
+        holder.csnyText.setText(handlerDateStr(cadre.getCsny()));
 
-        if (cadre.getRxzsj() != null && (!cadre.getRxzsj().equals("null")))
-            holder.xzsjText.setText(cadre.getRxzsj().substring(0, 7));
-        else
-            holder.xzsjText.setText("");
         if (cadre.getFg() != null && (!cadre.getFg().equals("null")))
             holder.fgText.setText(cadre.getFg());
         else
@@ -220,19 +207,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         dialog.show();
     }
 
-/*
-    public List<Cadre> reSortList(List<Cadre> cadres) {
-        List<Cadre> sortedList = new ArrayList<Cadre>();
-        sortedList.addAll(cadres);
-        sortedList.set(7, cadres.get(11));
-        sortedList.set(10, cadres.get(12));
-        sortedList.set(11, cadres.get(13));
-        sortedList.set(12, cadres.get(14));
-        sortedList.set(13, cadres.get(10));
-        sortedList.set(14, cadres.get(7));
-        return sortedList;
+    public String handlerDateStr(String element) {
+        if(element == null || element.equals("null") || element.length() == 0) {
+            return "";
+        }
+        if(element.length()<7){
+            return element.substring(0, element.length());
+        }
+        return element.substring(0, 7);
     }
-*/
 
     @Override
     public int getItemCount() {

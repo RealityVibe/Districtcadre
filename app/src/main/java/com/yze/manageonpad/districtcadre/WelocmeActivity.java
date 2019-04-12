@@ -25,7 +25,6 @@ import com.yze.manageonpad.districtcadre.model.ActivityManager;
 
 import java.util.List;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,9 +58,20 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
 
     private String mCreatePattern;
 
+    /**
+     * 可重试次数
+     */
     private int mCheckTimes = 3;
-    private boolean resetPswd = false;//是否修改密码
-    private boolean correctPswd = false;//是否成功输入密码
+
+    /**
+     * 是否修改密码
+     */
+    private boolean resetPswd = false;
+
+    /**
+     * 是否成功输入密码
+     */
+    private boolean correctPswd = false;
     private final static int FAULT_PASSWORD_PAUSE = 1;
     public static ActivityManager activityManager = new ActivityManager();
 /*    private Handler handler = new Handler() {
@@ -173,8 +183,12 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         SharedPreferences read = getSharedPreferences("lock", MODE_PRIVATE);
         //步骤2：获取文件中的值
         mLocalKey = read.getString("gesture_password", "");
+        // 初始密码
+        if(mLocalKey.isEmpty()){
+            mLocalKey = "0123";
+        }
         mPatternLockView = (PatternLockView) findViewById(R.id.patter_lock_view);
-        mPatternLockView.setDotCount(3);
+        mPatternLockView.setDotCount(4);
         mPatternLockView.setDotNormalSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_size));
         mPatternLockView.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_selected_size));
         mPatternLockView.setPathWidth((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_path_width));
@@ -209,11 +223,16 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         public void onComplete(List<PatternLockView.Dot> pattern) {
             Log.d(getClass().getName(), "Pattern complete: " +
                     PatternLockUtils.patternToString(mPatternLockView, pattern));
+            // 设置重置标志
             if (reset_rb.isChecked()) {
                 resetPswd = true;
             }
+
             if (correctPswd) {
-                createPattern(pattern);
+                if(createPattern(pattern)){
+                    gesture_ll.setVisibility(View.GONE);
+                    welcome_ll.setVisibility(View.VISIBLE);
+                }
             } else if (checkPattern(pattern)) {
                 if (!resetPswd) {
                     gesture_ll.setVisibility(View.GONE);
@@ -232,6 +251,12 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         }
     };
 
+    /**
+     * 校验手势密码
+     *
+     * @param pattern 密码ist
+     * @return
+     */
     private boolean checkPattern(List<PatternLockView.Dot> pattern) {
         String patternStr = PatternLockUtils.patternToString(mPatternLockView, pattern);
 
@@ -245,6 +270,12 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
 
         if (patternStr.equals(mLocalKey)) {
             mTVTips.setText("输入正确");
+            mPatternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);mPatternLockView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPatternLockView.clearPattern();
+                }
+            }, 100);
             return true;
         } else {
             mTVTips.setText("你还有" + mCheckTimes + "次机会");
@@ -259,7 +290,7 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
         return false;
     }
 
-    private void createPattern(List<PatternLockView.Dot> pattern) {
+    private boolean createPattern(List<PatternLockView.Dot> pattern) {
         if (pattern.size() < 4) {
             mTVTips.setText("至少需要4个点，请重试");
             mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
@@ -270,14 +301,14 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
                     mTVTips.setText("请绘制新的解锁手势");
                 }
             }, 1500);
-            return;
+            return false;
         }
 
         String patternStr = PatternLockUtils.patternToString(mPatternLockView, pattern);
 
         if (TextUtils.isEmpty(mCreatePattern)) {
             mCreatePattern = patternStr;
-            boolean[][] selected = new boolean[3][3];
+            boolean[][] selected = new boolean[4][4];
             for (PatternLockView.Dot dot : pattern) {
                 selected[dot.getRow()][dot.getColumn()] = true;
             }
@@ -293,12 +324,13 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
                 editor.putString("gesture_password", mCreatePattern);
                 //步骤3：提交
                 editor.commit();
-                mPatternLockView.postDelayed(new Runnable() {
+                return true;
+               /* mPatternLockView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         finish();
                     }
-                }, 800);
+                }, 800);*/
             } else {
                 mCreatePattern = "";
                 mTVTips.setText("两次图案不一致，请重新绘制");
@@ -316,6 +348,7 @@ public class WelocmeActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         }
+        return false;
     }
 
 

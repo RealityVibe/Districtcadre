@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,11 +18,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,27 +61,27 @@ public class JSONUtils {
                     int count = 0;
                     if (tmpobject.getString("bmbh").equals(bmbh)) {
                         if (!tmpobject.getString("xm").equals("null")) {
-                            String tmp_xm = transformNullString(tmpobject.get("xm"));
-                            String tmp_bmbh = transformNullString(tmpobject.get("bmbh"));
-                            String tmp_xrzw = transformNullString(tmpobject.get("xrzw"));
-                            String tmp_xb = transformNullString(tmpobject.get("xb"));
-                            String tmp_csny = transformNullString(tmpobject.get("csny"));
-                            String tmp_jg = transformNullString(tmpobject.get("jg"));
-                            String tmp_xl = transformNullString(tmpobject.get("qrzjy"));
+                            String tmp_xm = transformNullString(tmpobject, "xm");
+                            String tmp_bmbh = transformNullString(tmpobject, "bmbh");
+                            String tmp_xrzw = transformNullString(tmpobject, "xrzw");
+                            String tmp_xb = transformNullString(tmpobject, "xb");
+                            String tmp_csny = transformNullString(tmpobject, "csny");
+                            String tmp_jg = transformNullString(tmpobject, "jg");
+                            String tmp_xl = transformNullString(tmpobject, "qrzjy");
                             String tmp_xw = "";
-                            tmp_xw = transformNullString(tmpobject.get("zzxl"));
+                            tmp_xw = transformNullString(tmpobject, "zzxl");
                             String tmp_qrzxw = "";
-                            tmp_qrzxw = transformNullString(tmpobject.get("qrzxl"));
-                            String tmp_cjgzsj = transformNullString(tmpobject.get("cjgzsj"));
+                            tmp_qrzxw = transformNullString(tmpobject, "qrzxl");
+                            String tmp_cjgzsj = transformNullString(tmpobject, "cjgzsj");
                             String tmp_rdsj = null;
-                            if (!transformNullString(tmpobject.get("zzmm")).equals("中共党员") && !transformNullString(tmpobject.get("zzmm")).equals(""))
-                                tmp_rdsj = transformNullString(tmpobject.get("zzmm"));
+                            if (!transformNullString(tmpobject, "zzmm").equals("中共党员") && !transformNullString(tmpobject, "zzmm").equals(""))
+                                    tmp_rdsj = transformNullString(tmpobject, "zzmm");
                             else {
-                                tmp_rdsj = transformNullString(tmpobject.get("rdsj"));
+                                tmp_rdsj = transformNullString(tmpobject, "rdsj");
                             }
-                            String tmp_rxzsj = transformNullString(tmpobject.get("rxzsj"));
-                            String tmp_fg = transformNullString(tmpobject.get("fg"));
-                            String tmp_bz ="";
+                            String tmp_rxzsj = transformNullString(tmpobject, "rxzsj");
+                            String tmp_fg = transformNullString(tmpobject, "fg");
+                            String tmp_bz = transformNullString(tmpobject, "bz");
                             tmp_cadre = new Cadre(tmp_xm, tmp_bmbh, tmp_xrzw, tmp_xb, tmp_csny, tmp_jg,
                                     tmp_xl, tmp_xw, tmp_qrzxw, tmp_cjgzsj, tmp_rdsj, tmp_rxzsj, tmp_fg, tmp_bz);
                         } else {
@@ -111,26 +117,26 @@ public class JSONUtils {
                     int count = 0;
                     if (!tmpobject.getString("xm").equals("null")) {
 
-                        String tmp_xm = transformNullString(tmpobject.get("xm"));
-                        String tmp_bmbh = transformNullString(tmpobject.get("bmbh"));
-                        String tmp_xrzw = transformNullString(tmpobject.get("xrzw"));
-                        String tmp_xb = transformNullString(tmpobject.get("xb"));
-                        String tmp_csny = transformNullString(tmpobject.get("csny"));
-                        String tmp_jg = transformNullString(tmpobject.get("jg"));
-                        String tmp_xl = transformNullString(tmpobject.get("qrzjy"));
+                        String tmp_xm = transformNullString(tmpobject, "xm");
+                        String tmp_bmbh = transformNullString(tmpobject, "bmbh");
+                        String tmp_xrzw = transformNullString(tmpobject, "xrzw");
+                        String tmp_xb = transformNullString(tmpobject, "xb");
+                        String tmp_csny = transformNullString(tmpobject, "csny");
+                        String tmp_jg = transformNullString(tmpobject, "jg");
+                        String tmp_xl = transformNullString(tmpobject, "qrzjy");
                         String tmp_xw = "";
-                        tmp_xw = transformNullString(tmpobject.get("zzxl"));
+                        tmp_xw = transformNullString(tmpobject, "zzxl");
                         String tmp_qrzxw = "";
-                        tmp_qrzxw = transformNullString(tmpobject.get("qrzxl"));
-                        String tmp_cjgzsj = transformNullString(tmpobject.get("cjgzsj"));
+                        tmp_qrzxw = transformNullString(tmpobject, "qrzxl");
+                        String tmp_cjgzsj = transformNullString(tmpobject, "cjgzsj");
                         String tmp_rdsj = null;
-                        if (!transformNullString(tmpobject.get("zzmm")).equals("中共党员") && !transformNullString(tmpobject.get("zzmm")).equals(""))
-                            tmp_rdsj = transformNullString(tmpobject.get("zzmm"));
+                        if (!transformNullString(tmpobject, "zzmm").equals("中共党员") && !transformNullString(tmpobject, "zzmm").equals(""))
+                            tmp_rdsj = transformNullString(tmpobject, "zzmm");
                         else {
-                            tmp_rdsj = transformNullString(tmpobject.get("rdsj"));
+                            tmp_rdsj = transformNullString(tmpobject, "rdsj");
                         }
-                        String tmp_rxzsj = transformNullString(tmpobject.get("rxzsj"));
-                        String tmp_fg = transformNullString(tmpobject.get("fg"));
+                        String tmp_rxzsj = transformNullString(tmpobject, "rxzsj");
+                        String tmp_fg = transformNullString(tmpobject, "fg");
                         String tmp_bz = "";
                         tmp_cadre = new Cadre(tmp_xm, tmp_bmbh, tmp_xrzw, tmp_xb, tmp_csny, tmp_jg,
                                 tmp_xl, tmp_xw, tmp_qrzxw, tmp_cjgzsj, tmp_rdsj, tmp_rxzsj, tmp_fg, tmp_bz);
@@ -172,19 +178,32 @@ public class JSONUtils {
         return null;
     }
 
-    private static String getContentString(String jsonData, Context c) throws IOException {
+    //    private static String getContentString(String jsonData, Context c) throws IOException {
+    private static String getDataFromMemory(String jsonData, Context c) throws IOException {
 
         // 从raw目录读取
         InputStream is = c.getResources().openRawResource(R.raw.sourcedata);
         BufferedReader read = new BufferedReader(new InputStreamReader(is));
         String line = "";
         StringBuffer sb = new StringBuffer();
-        while((line = read.readLine()) != null) {
+        while ((line = read.readLine()) != null) {
             sb.append(line).append("\n");
         }
         String txt = sb.toString();
-        return  new String(txt.getBytes("UTF-8"), "UTF-8");
-        /*String result = "";
+        return new String(txt.getBytes("UTF-8"), "UTF-8");
+    }
+
+    /**
+     * 从外存读取文件
+     *
+     * @param jsonData
+     * @param c
+     * @return
+     * @throws IOException
+     */
+    public static String getContentString(String jsonData, Context c) throws IOException {
+//    public static String getDataFromMemory(String jsonData, Context c) throws IOException {
+        String result = "";
         FileInputStream f = null;
         if (ContextCompat.checkSelfPermission(c, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -192,12 +211,27 @@ public class JSONUtils {
 //         1105修改点
         f = new FileInputStream(Environment.getExternalStorageDirectory() + "/Android/docs/" + jsonData);
 //        f = new FileInputStream(String.valueOf(c.getAssets().open("sourcedata.json")));
+        //new BufferedReader(new InputStreamReader(new FileInputStream(Environment.getExternalStorageDirectory() + "/Android/docs/sourcedata.json"))).readLine()
         BufferedReader bis = new BufferedReader(new InputStreamReader(f));
         String line = "";
         while ((line = bis.readLine()) != null) {
             result += line;
         }
-        return new String(result.getBytes("UTF-8"), "UTF-8");*/
+        bis.close();
+        f.close();
+        return new String(result.getBytes("UTF-8"), "UTF-8");
+    }
+
+    public static void updateDataResource(String newData, Context c) throws IOException {
+        String result = "";
+        FileOutputStream f = null;
+        if (ContextCompat.checkSelfPermission(c, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+        f = new FileOutputStream(Environment.getExternalStorageDirectory() + "/Android/docs/sourcedata.json");
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(f));
+        bw.write(newData);
+        bw.close();
     }
 
     /*
@@ -256,7 +290,17 @@ public class JSONUtils {
     }
 
     //处理null值为""
-    private static String transformNullString(Object str) {
+    private static String transformNullString(JSONObject object, String key) {
+        if (object.isNull(key)) {
+            return "";
+        }
+        String str = null;
+        try {
+            str = object.getString(key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         if (str == null) {
             return "";
         } else {
