@@ -54,88 +54,218 @@
             android:textColor="#000" />
     </LinearLayout>
 
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="match_parent">
 
-        <!--左侧干部-->
+
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="10dp">
-
-            <ImageView
-                android:id="@+id/cadre_left"
-                android:layout_width="300px"
-                android:layout_height="280px"
-                android:src="@drawable/cadre" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <TextView
+                android:layout_margin="10dp">
+
+                <!--左侧干部-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/cadre_left"
+                        android:layout_width="300px"
+                        android:layout_height="280px"
+                        android:src="@drawable/cadre" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/left_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textColor="#fff"
+                            android:textSize="32px" />
+
+                        <TextView
+                            android:id="@+id/left_zw"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textColor="#fff"
+                            android:textSize="32px" />
+
+                        <Button
+                            android:id="@+id/left_word_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100px"
+                            android:layout_gravity="left"
+                            android:padding="0dp"
+                            android:text="查阅材料"
+                            android:textSize="32px" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/left_name"
-                    android:layout_width="wrap_content"
+                    android:src="@drawable/pk_200" />
+
+                <!--右侧干部-->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="32px" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/cadre_right"
+                        android:layout_width="300px"
+                        android:layout_height="280px"
+                        android:layout_gravity="left"
+                        android:src="@drawable/cadre_female" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/right_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textColor="#fff"
+                            android:textSize="32px" />
+
+                        <TextView
+                            android:id="@+id/right_zw"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textColor="#fff"
+                            android:textSize="32px" />
+
+                        <Button
+                            android:id="@+id/right_word_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100px"
+                            android:layout_gravity="left"
+                            android:padding="0dp"
+                            android:text="查阅材料"
+                            android:textSize="32px" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/compare_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/pk_200" />
 
-        <!--右侧干部-->
+        <!--查阅材料-->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingRight="10dp">
+            android:id="@+id/compare_word"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <!--left查阅材料-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
+                <LinearLayout
+                    android:id="@+id/compare_word_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/compare_word_shape"
+                    android:orientation="vertical"
+                    android:padding="1dp">
+                    <WebView
+                        android:id="@+id/left_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/compare_word_shape"/>
 
-            <ImageView
-                android:id="@+id/cadre_right"
-                android:layout_width="300px"
-                android:layout_height="280px"
-                android:layout_gravity="center"
-                android:src="@drawable/cadre_female" />
+                    <TextView
+                        android:id="@+id/left_word_cancel"
+                        android:layout_width="140px"
+                        android:layout_height="60px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/left_cadre_shape"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="关闭文件"
+                        android:textColor="#ffffff"
+                        android:textSize="26px" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/right_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="32px" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
+                <!--right查阅材料-->
+                <LinearLayout
+                    android:id="@+id/compare_word_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/compare_word_shape"
+                    android:orientation="vertical"
+                    android:padding="1dp">
+
+                    <WebView
+                        android:id="@+id/right_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/compare_word_shape"/>
+
+                    <TextView
+                        android:id="@+id/right_word_cancel"
+                        android:layout_width="140px"
+                        android:layout_height="60px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/right_cadre_shape"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="关闭文件"
+                        android:textColor="#ffffff"
+                        android:textSize="26px" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/compare_recycler_view">
-
-    </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
 
 
 </LinearLayout>

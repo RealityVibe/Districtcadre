@@ -209,7 +209,8 @@ public class JSONUtils {
             ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 //         1105修改点
-        f = new FileInputStream(Environment.getExternalStorageDirectory() + "/Android/docs/" + jsonData);
+//        f = new FileInputStream(Environment.getExternalStorageDirectory() + "/Android/docs/" + jsonData);
+        f = new FileInputStream(Environment.getExternalStorageDirectory() + "/" + jsonData);
 //        f = new FileInputStream(String.valueOf(c.getAssets().open("sourcedata.json")));
         //new BufferedReader(new InputStreamReader(new FileInputStream(Environment.getExternalStorageDirectory() + "/Android/docs/sourcedata.json"))).readLine()
         BufferedReader bis = new BufferedReader(new InputStreamReader(f));
@@ -228,7 +229,8 @@ public class JSONUtils {
         if (ContextCompat.checkSelfPermission(c, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
-        f = new FileOutputStream(Environment.getExternalStorageDirectory() + "/Android/docs/sourcedata.json");
+//        f = new FileOutputStream(Environment.getExternalStorageDirectory() + "/Android/docs/sourcedata.json");
+        f = new FileOutputStream(Environment.getExternalStorageDirectory() + "/sourcedata.json");
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(f));
         bw.write(newData);
         bw.close();

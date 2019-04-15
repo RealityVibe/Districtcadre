@@ -258,7 +258,11 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             gd.setColor(mContext.getResources().getColor(R.color.left_cadre_color));
                             gd.setStroke(2, Color.parseColor("#292f3a"));
                             gd.setCornerRadius(5);
-                            leftCadre = ((ViewHolder1) holder).tvList.get(index);
+                            try {
+                                leftCadre = ((ViewHolder2) holder).tvList.get(index);
+                            } catch (Exception e){
+                                leftCadre = ((ViewHolder1) holder).tvList.get(index);
+                            }
                             leftCadre.setBackgroundDrawable(gd);
                             leftCadre.setBackgroundDrawable(gd);
                             leftName = leftCadre.getText().toString();
@@ -276,7 +280,11 @@ public class NewRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             gd.setColor(mContext.getResources().getColor(R.color.right_cadre_color));
                             gd.setStroke(2, Color.parseColor("#292f3a"));
                             gd.setCornerRadius(5);
-                            rightCadre = ((ViewHolder1) holder).tvList.get(index);
+                            try {
+                                rightCadre = ((ViewHolder2) holder).tvList.get(index);
+                            } catch (Exception e){
+                                rightCadre = ((ViewHolder1) holder).tvList.get(index);
+                            }
                             rightCadre.setBackgroundDrawable(gd);
                             rightCadre.setBackgroundDrawable(gd);
                             rightName = rightCadre.getText().toString();
